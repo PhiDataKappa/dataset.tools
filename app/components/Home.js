@@ -63,6 +63,9 @@ export default class Home extends Component {
           {this.state.fireRedirect && (
             <Redirect to ={'/mainpage'}/>
           )}
+
+          <br/>
+
            {/* <a  href="http://localhost:8080/authorize">Click here to sign in with data.world!!</a> */}
           {/* <button onClick = {() => getFiles()}>Get files</button> */}
         </div>

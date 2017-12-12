@@ -11,7 +11,7 @@ import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
 import Flexbox from 'flexbox-react';
 import styled from 'styled-components';
-import Datasets from './Datasets';
+import Datasets from '../containers/Datasets';
 import Projects from './Projects';
 import FlatButton from 'material-ui/FlatButton';
 
@@ -72,7 +72,6 @@ export default class MainPage extends Component {
        <AppBar title="dataset.tools" showMenuIconButton={false}  style={positionTitle} iconElementRight={<Link to="/"><FlatButton label="Log Out" /></Link>} />
        <div className='mainContent'>
         {MainView()}
-        <p>something here</p>
        </div>
       <Drawer className='nav' open={true} containerStyle={forceNavDown}>
         <MenuItem onClick={() => switchView('Projects')}>Projects</MenuItem>
