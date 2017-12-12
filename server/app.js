@@ -22,22 +22,36 @@ const config = {
   redirect_uri:('http://localhost:8080'),
   response_type: 'code',
   code_verifier: 'NTM3MDAyOTk0OGEwMjZmOWE0YTA5MGM3MDVjZGFiOWYyOTVmZGQ3ZmY0OTA2OTVlMTQ3MjFiZWIwN2E1Y2E3YQ',
+/*
+  code_verifier: 'NTM3MDAyOTk0OGEwMjZmOWE0YTA5MGM3MDVjZGFiOWYyOTVmZGQ3ZmY0OTA2OTVlMTQ3MjFiZWIwN2E1Y2E3YQ',
   code_challenge: base64(sha256('NTM3MDAyOTk0OGEwMjZmOWE0YTA5MGM3MDVjZGFiOWYyOTVmZGQ3ZmY0OTA2OTVlMTQ3MjFiZWIwN2E1Y2E3YQ'))
+*/
 }
 
 app.get('/authorize', function(req, res) {
-  console.log('~~~~~AUTHORIZING')
+  console.log('~~~~~AUTHORIZING', config.code_challenge)
   const client_id = process.env.CLIENT_ID;
   const redirect_uri = process.env.REDIRECT_URI;
   const endpoint = process.env.AUTHORIZATION_ENDPOINT;
-  res.redirect((`https://data.world/oauth/authorize?client_id=${encodeURIComponent(config.client_id)}&redirect_uri=${encodeURIComponent(config.redirect_uri)}&response_type=code&code_challenge_method=S256&code_challenge=${encodeURIComponent(config.code_challenge)}`))
+  res.redirect((`https://data.world/oauth/authorize?client_id=${encodeURIComponent(config.client_id)}&redirect_uri=${encodeURIComponent(config.redirect_uri)}&response_type=code&code_challenge_method=plain&code_challenge=${config.code_verifier}`))
 });
 
 app.get('/', function (req, res) {
   var code = req.query.code;
   if (code){
-    axios.post(`https://data.world/oauth/access_token?code=${encodeURIComponent(code)}&client_id=${encodeURIComponent(config.client_id)}&client_secret=${encodeURIComponent(process.env.DATAWORLD_SECRET)}&grant_type=authorization_code&code_verifier=${encodeURIComponent(config.code_verifier)}`).then((response) =>{
-      console.log(response);
+
+    var options = {
+      code: code,
+      client_id: process.env.CLIENT_ID,
+      client_secret: process.env.DATAWORLD_SECRET,
+      grant_type: 'authorization_code',
+      code_verifier: config.code_verifier
+    }
+
+    axios.post('https://data.world/oauth/access_token', options)
+      //?code=${encodeURIComponent(code)}&client_id=${encodeURIComponent(config.client_id)}&client_secret=${encodeURIComponent(process.env.DATAWORLD_SECRET)}&grant_type=authorization_code&code_verifier=${encodeURIComponent(config.code_verifier)}`).then((response) =>{
+      .then(response => {
+      console.log('line 51&&&&&&&&&&&&&&&', response);
       if (response.data.access_token){
         console.log('response token',response.data.access_token);
       }
