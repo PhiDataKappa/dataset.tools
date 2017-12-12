@@ -16,7 +16,7 @@ export default class Datasets extends Component {
  render() {
    var hasUserData = Array.isArray(this.props.userData) ? this.props.userData : [];
    return (
-     <div>
+     <div className='datasetTable'>
      <Table onRowSelection={this.handleRowSelection}>
         <TableHeader>
           <TableRow>
