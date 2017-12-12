@@ -8,8 +8,8 @@ function mapStateToProps(state) {
   return state;
 }
 
-function mapDispatchToProps(dispatch) {
-  return bindActionCreators(ProjectsActions, dispatch);
-}
+// function mapDispatchToProps(dispatch) {
+//   return bindActionCreators(ProjectsActions, dispatch);
+// }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Projects);
+export default connect(mapStateToProps)(Projects);

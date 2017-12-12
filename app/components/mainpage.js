@@ -12,7 +12,7 @@ import MenuItem from 'material-ui/MenuItem';
 import Flexbox from 'flexbox-react';
 import styled from 'styled-components';
 import Datasets from '../containers/Datasets';
-import Projects from './Projects';
+import Projects from '../containers/Projects';
 import FlatButton from 'material-ui/FlatButton';
 
 export default class MainPage extends Component {
@@ -39,8 +39,8 @@ export default class MainPage extends Component {
   }
   render() {
     //functions
-    console.log(this.props)
-    console.log(this.props.token);
+    // console.log(this.props)
+    // console.log(this.props.token);
     var that = this;
 
     var forceNavDown = {'top': '72px'};

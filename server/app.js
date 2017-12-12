@@ -53,7 +53,7 @@ app.get('/', function (req, res) {
 });
 
 app.get('/getUserDatasets', (req, res) => {
-  console.log(req.query.accessToken, 'getuserdatasets');
+  // console.log(req.query.accessToken, 'getuserdatasets');
   var accessToken = req.query.accessToken;
   var options = { method: 'GET',
     url: 'https://api.data.world/v0/user/datasets/own',

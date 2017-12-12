@@ -19,7 +19,7 @@ export default class Home extends Component {
 
   redir = () => {
     var at = document.getElementById('submit').value
-    console.log('at',at);
+    // console.log('at',at);
     this.props.addAccessToken(at);
     this.setState({fireRedirect:true})
   }

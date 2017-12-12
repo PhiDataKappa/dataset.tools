@@ -10,8 +10,8 @@ import {
 export default class Datasets extends Component {
   constructor(props){
     super(props);
-    console.log(props, 'props in dataset')
-    console.log(this.props, 'this.props in dataset')
+    console.log('props in dataset',props)
+    console.log('this.props in dataset',this.props)
   }
  render() {
    var hasUserData = Array.isArray(this.props.userData) ? this.props.userData : [];
