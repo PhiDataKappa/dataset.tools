@@ -55,12 +55,15 @@ export default class Home extends Component {
           <br/>
           <h4>OR</h4>
           <h4>Place Access Token Here</h4>
+
           <TextField hintText="Access Token" id="submit" />
           {/* <input id="submit" placeholder="Access Token here"></input> */}
           <RaisedButton onClick={this.redir.bind(this)} label="Submit" />
+          <h5>Account > Settings > Advanced</h5>
           {this.state.fireRedirect && (
             <Redirect to ={'/mainpage'}/>
           )}
+
           <br/>
 
            {/* <a  href="http://localhost:8080/authorize">Click here to sign in with data.world!!</a> */}

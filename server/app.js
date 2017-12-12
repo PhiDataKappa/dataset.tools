@@ -49,7 +49,7 @@ app.get('/', function (req, res) {
       console.log('------------------------------',err)
     })
   }
-  res.sendFile(path.resolve('./app/app.html'))
+  res.sendFile(path.resolve('./app/index.html'))
 });
 
 app.get('/getUserDatasets', (req, res) => {
