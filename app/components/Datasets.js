@@ -42,7 +42,6 @@ export default class Datasets extends Component {
 
         </TableBody>
       </Table>
-     <p>Hi im in Datasets</p>
    </div>
    )
  }
