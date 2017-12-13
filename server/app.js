@@ -9,10 +9,11 @@ var base64 = require('base64url');
 var request = require("request");
 var rp = require('request-promise');
 // var base64 = require('url-safe-base64');
+var cookieParser = require('cookie-parser');
 
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
-
+app.use(cookieParser())
 
 app.listen(8080, function(){
   console.log('listening on port 8080');
@@ -53,7 +54,9 @@ app.get('/', function (req, res) {
       .then(response => {
       // console.log('line 54&&&&&&&&&&&&&&&', response);
       if (response.data.access_token){
-        // console.log('response token',response.data.access_token);
+        var at = response.data.access_token
+        console.log('response cookie',response);
+        res.cookie('cookiename',at,{maxAge:90000,httpOnly:false});
         //res.cookie TODO: attach token to response
         res.sendFile(path.resolve('./app/app.html'))
       }
