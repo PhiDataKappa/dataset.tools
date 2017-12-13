@@ -17,6 +17,20 @@ export default class Home extends Component {
     }
   }
 
+  componentDidMount() {
+    if (document.cookie){
+      var cookie = document.cookie;
+      cookie = cookie.split('=')[1];
+      console.log(cookie);
+      this.props.addAccessToken(cookie);
+      this.setState({fireRedirect:true})
+    }
+    //if token
+      //redirect to MainPage
+    //else
+      //chill
+  }
+
   redir = () => {
     var at = document.getElementById('submit').value
     // console.log('at',at);
