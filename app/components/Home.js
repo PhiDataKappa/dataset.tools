@@ -17,6 +17,13 @@ export default class Home extends Component {
     }
   }
 
+  componentDidMount() {
+    //if token
+      //redirect to MainPage
+    //else
+      //chill
+  }
+
   redir = () => {
     var at = document.getElementById('submit').value
     // console.log('at',at);

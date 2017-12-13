@@ -29,7 +29,7 @@ const config = {
 }
 
 app.get('/authorize', function(req, res) {
-  console.log('~~~~~AUTHORIZING', config.code_challenge)
+  // console.log('~~~~~AUTHORIZING', config.code_challenge)
   const client_id = process.env.CLIENT_ID;
   const redirect_uri = process.env.REDIRECT_URI;
   const endpoint = process.env.AUTHORIZATION_ENDPOINT;
@@ -51,19 +51,22 @@ app.get('/', function (req, res) {
     axios.post('https://data.world/oauth/access_token', options)
       //?code=${encodeURIComponent(code)}&client_id=${encodeURIComponent(config.client_id)}&client_secret=${encodeURIComponent(process.env.DATAWORLD_SECRET)}&grant_type=authorization_code&code_verifier=${encodeURIComponent(config.code_verifier)}`).then((response) =>{
       .then(response => {
-      console.log('line 51&&&&&&&&&&&&&&&', response);
+      // console.log('line 54&&&&&&&&&&&&&&&', response);
       if (response.data.access_token){
-        console.log('response token',response.data.access_token);
+        // console.log('response token',response.data.access_token);
+        //res.cookie TODO: attach token to response
+        res.sendFile(path.resolve('./app/app.html'))
       }
       else {
         const errorMessage = response.status.message || 'unknown error';
-         console.log('-------------------------',errorMessage);
+         console.log('-----------else--------------',errorMessage);
       }
     }).catch(err =>{
-      console.log('------------------------------',err)
+      console.log('-----------------catch-------------',err)
     })
   }
-  res.sendFile(path.resolve('./app/index.html'))
+
+  //
 });
 
 app.get('/getUserDatasets', (req, res) => {
@@ -78,11 +81,18 @@ app.get('/getUserDatasets', (req, res) => {
     if (error) {
       console.log(error);
     }
-    console.log(body, 'body', response, 'response');
+    // console.log(body, 'body', response, 'response');
     res.send(body);
   })
 //  .then(res.end());
   //var token = req.query
+})
+
+
+// app.use(express.static(path.join(__dirname, '../dll')))
+app.get('/dll/renderer.dev.dll.js', (req, res) => {
+  console.log('~~~~~~DLLL')
+  res.sendFile(path.join(__dirname, '../dll/renderer.dev.dll.js'))
 })
 
 app.get('/getdata', (req,res) =>{
