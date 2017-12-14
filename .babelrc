@@ -5,12 +5,13 @@
       "useBuiltIns": true
     }],
     "stage-0",
-    "react"
+    "react",
+    "es2015"
   ],
   "plugins": ["add-module-exports", "dynamic-import-webpack"],
   "env": {
     "production": {
-      "presets": ["react-optimize"],
+      "presets": ["react-optimize", "react-hmre"],
       "plugins": ["babel-plugin-dev-expression"]
     },
     "development": {
@@ -22,6 +23,27 @@
           "annotate": true
         }]
       ]
+    },
+    "test": {
+      "plugins": [
+        ["webpack-loaders", { "config": "webpack.config.node.js", "verbose": false }]
+      ]
     }
+  }
+}
+
+
+
+
+"presets": ["es2015", "stage-0", "react"],
+"plugins": ["add-module-exports"],
+"env": {
+  "development": {
+    "presets": ["react-hmre"]
+  },
+  "test": {
+    "plugins": [
+      ["webpack-loaders", { "config": "webpack.config.node.js", "verbose": false }]
+    ]
   }
 }
