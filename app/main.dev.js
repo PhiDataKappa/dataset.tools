@@ -87,16 +87,6 @@ app.on('ready', async () => {
   menuBuilder.buildMenu();
 });
 
-
-// app.on('activate', () => {
-//     mainWindow = new BrowserWindow({
-//       show: false,
-//       width: 1024,
-//       height: 738
-//     })
-//   })
-
-
 function createWindow () {
   // Create the browser window.
   let mainWindow = new BrowserWindow({width: 1024,height: 738})
@@ -127,16 +117,3 @@ app.on('activate', () => {
     createWindow()
   }
 })
-
-
-//   app.on('activate', () => {
-//   // On macOS it's common to re-create a window in the app when the
-//   // dock icon is clicked and there are no other windows open.
-//   // if (win === null) {
-//     mainWindow = new BrowserWindow({
-//       show: false,
-//       width: 1024,
-//       height: 738
-//     })
-//   // }
-// })
