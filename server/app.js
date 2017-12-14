@@ -1,4 +1,4 @@
-npm require('dotenv').config();
+var require('dotenv').config();
 var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');

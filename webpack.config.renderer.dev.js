@@ -6,7 +6,7 @@
  *
  * https://webpack.js.org/concepts/hot-module-replacement/
  */
-
+import dotenv from 'dotenv';
 import path from 'path';
 import fs from 'fs';
 import webpack from 'webpack';
