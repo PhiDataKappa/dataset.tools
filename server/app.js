@@ -1,7 +1,6 @@
 // import dotenv from 'dotenv';
 require('dotenv').config();
 var express = require('express');
-var app = express();
 var bodyParser = require('body-parser');
 var axios = require('axios');
 var path = require('path');
@@ -12,23 +11,49 @@ var rp = require('request-promise');
 // var base64 = require('url-safe-base64');
 var cookieParser = require('cookie-parser');
 
+import webpackDevMiddleware from 'webpack-dev-middleware';
+import webpackHotMiddleware from 'webpack-hot-middleware';
+import config from './webpack.config.development';
+
+
+// const config = {
+//   client_id: process.env.CLIENT_ID,
+//   redirect_uri:('http://localhost:8080'),
+//   response_type: 'code',
+//   code_verifier: 'NTM3MDAyOTk0OGEwMjZmOWE0YTA5MGM3MDVjZGFiOWYyOTVmZGQ3ZmY0OTA2OTVlMTQ3MjFiZWIwN2E1Y2E3YQ',
+// }
+
+var app = express();
+const compiler = webpack(config);
+const PORT = 8080;
+
+
+app.use(webpackDevMiddleware(compiler, {
+  publicPath: config.output.publicPath,
+  stats: {
+    colors: true
+  }
+}));
+app.use(webpackHotMiddleware(compiler));
+
+
+
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
-app.use(cookieParser())
+app.use(cookieParser());
 
-app.listen(8080, function(){
-  console.log('listening on port 8080');
-})
-const config = {
-  client_id: process.env.CLIENT_ID,
-  redirect_uri:('http://localhost:8080'),
-  response_type: 'code',
-  code_verifier: 'NTM3MDAyOTk0OGEwMjZmOWE0YTA5MGM3MDVjZGFiOWYyOTVmZGQ3ZmY0OTA2OTVlMTQ3MjFiZWIwN2E1Y2E3YQ',
-/*
-  code_verifier: 'NTM3MDAyOTk0OGEwMjZmOWE0YTA5MGM3MDVjZGFiOWYyOTVmZGQ3ZmY0OTA2OTVlMTQ3MjFiZWIwN2E1Y2E3YQ',
-  code_challenge: base64(sha256('NTM3MDAyOTk0OGEwMjZmOWE0YTA5MGM3MDVjZGFiOWYyOTVmZGQ3ZmY0OTA2OTVlMTQ3MjFiZWIwN2E1Y2E3YQ'))
-*/
-}
+app.listen(PORT, 'localhost', err => {
+  if (err) {
+    console.error(err);
+    return;
+  }
+  console.log(`Listening at http://localhost:${PORT}`);
+});
+
+// app.listen(8080, function(){
+//   console.log('listening on port 8080');
+// })
+
 
 app.get('/authorize', function(req, res) {
   // console.log('~~~~~AUTHORIZING', config.code_challenge)
