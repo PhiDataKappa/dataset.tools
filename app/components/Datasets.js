@@ -8,6 +8,8 @@ import {
   TableRowColumn,
 } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
+import axios from 'axios';
+
 export default class Datasets extends Component {
   constructor(props){
     super(props);
@@ -15,8 +17,13 @@ export default class Datasets extends Component {
     console.log('this.props in dataset',this.props)
   }
 
- getFile(name) {
+ getFile(id, name) {
    console.log('getting file' + name);
+   axios.get('http://localhost:8080/downloadDatasets', {params: {projectID: id, file: name}})
+   .then((data) => {
+     console.log('this is data in getFile', data);
+     //this.props.actions.mainPageActions.addUserData(data.data.records);
+   })
  }
 
  render() {
@@ -44,9 +51,9 @@ export default class Datasets extends Component {
 
             <TableRow>
             <TableRowColumn></TableRowColumn>
-            <TableRowColumn><RaisedButton onClick={() => {console.log('clicked')}}>Download</RaisedButton></TableRowColumn>
+            <TableRowColumn>{file.name}</TableRowColumn>
             <TableRowColumn>{(file.sizeInBytes/1000)} kb</TableRowColumn>
-            <TableRowColumn><RaisedButton onClick={() => this.getFile(file.name)}>Download</RaisedButton></TableRowColumn>
+            <TableRowColumn><RaisedButton onClick={() => this.getFile(project.id,file.name)}>Download</RaisedButton></TableRowColumn>
           </TableRow>
             )
           )}
