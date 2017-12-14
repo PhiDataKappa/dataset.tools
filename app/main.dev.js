@@ -13,6 +13,7 @@
 import path from 'path';
 import url from 'url';
 import {app, crashReporter, BrowserWindow, Menu} from 'electron';
+const window = require('electron-window');
 // import {app, BrowserWindow, Menu} from 'electron';
 // import { app, BrowserWindow } from 'electron';
 import MenuBuilder from './menu';
@@ -20,9 +21,31 @@ import MenuBuilder from './menu';
 const isDevelopment = (process.env.NODE_ENV === 'development');
 const isProduction = (process.env.NODE_ENV === 'production');
 
+
+
 let mainWindow = null;
 let forceQuit = false;
 
+var menubar = require('menubar')
+var mb = menubar()
+mb.on('ready', function ready () {
+  console.log('app is ready')
+  // your app code here
+})
+
+let win
+
+// tray and menubar
+function createWindow() {
+   win = new BrowserWindow({width: 1000, height: 400})
+   win.loadURL(url.format ({
+      pathname: path.join(__dirname, 'app.html'),
+      protocol: 'file:',
+      slashes: true
+   }))
+}
+
+app.on('ready', createWindow)
 
 if (isProduction) {
   const sourceMapSupport = require('source-map-support');
@@ -80,9 +103,13 @@ app.on('ready', async () => {
   mainWindow = new BrowserWindow({
     show: false,
     width: 1024,
-    minWidth: 640,
+    minWidth: 340,
     minHeight: 480,
-    height: 738
+    height: 800,
+    // "use-content-size": true,
+    resizable: true,
+    center: true,
+    frame: true
   });
 
   // mainWindow.loadURL(`file://${__dirname}/app.html`);
