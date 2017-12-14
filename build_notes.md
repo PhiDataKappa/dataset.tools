@@ -4,3 +4,5 @@
 
 ##Install:
 npm install babel-loader webpack --save-dev
+
+npm install
