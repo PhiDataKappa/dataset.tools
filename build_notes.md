@@ -6,3 +6,7 @@
 npm install babel-loader webpack --save-dev
 
 npm install
+
+create files:
+  .env   
+  .main.prod.js

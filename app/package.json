@@ -1,17 +1,85 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "electron-react-boilerplate",
+  "name": "dataset.tools",
   "version": "1.0.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
-  "main": "./main.prod.js",
-  "author": {
-    "name": "C. T. Lin",
-    "email": "chentsulin@gmail.com",
-    "url": "https://github.com/chentsulin"
-  },
+  "description": "A dataset managerbased on electron",
+  "main": "main/index.js",
   "scripts": {
+    "start": "ENV=development electron .",
+    "server": "babel-node server.js",
+    "dev": "concurrently -k 'babel-node server.js' 'npm start'",
+    "build": "webpack --config webpack.config.production.js && electron-packager . HackerNews --platform=darwin --arch=all --prune --overwrite --icon ./HN_icon",
     "postinstall": "npm rebuild --runtime=electron --target=1.6.6 --disturl=https://atom.io/download/atom-shell --build-from-source"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/PhiDataKappa/dataset.tools.git"
+  },
+  "author": "Phi Data Kappa",
   "license": "MIT",
-  "dependencies": {}
+  "homepage": "https://github.com/PhiDataKappa/dataset.tools",
+  "babel": {
+    "presets": [
+      "es2015",
+      "stage-0",
+      "react"
+    ]
+  },
+  "devDependencies": {
+    "babel-loader": "^6.2.4",
+    "babel-polyfill": "^6.7.4",
+    "concurrently": "^2.0.0",
+    "css-loader": "^0.23.1",
+    "debounce": "^1.0.0",
+    "electron-packager": "^6.0.0",
+    "express": "^4.13.4",
+    "file-loader": "^0.8.5",
+    "moment": "^2.12.0",
+    "postcss-loader": "^0.8.2",
+    "react-dom": "^15.0.1",
+    "react": "^15.0.1",
+    "redux-saga": "^0.9.5",
+    "redux": "^3.4.0",
+    "style-loader": "^0.13.1",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-hot-middleware": "^2.10.0",
+    "webpack-target-electron-renderer": "^0.4.0",
+    "webpack": "^1.12.14",
+    "redux-devtools": "^3.2.0",
+    "redux-devtools-dock-monitor": "^1.1.1",
+    "redux-devtools-log-monitor": "^1.0.11",
+    "redux-logger": "^2.6.1",
+    "source-map-support": "^0.4.0",
+    "react-addons-shallow-compare": "^15.1.0",
+    "react-mdl": "^1.5.4",
+    "react-redux": "^4.4.5",
+    "react-router": "^2.2.4",
+    "react-router-redux": "^4.0.2",
+    "react-select": "^1.0.0-beta13",
+    "react-virtualized": "^7.2.0",
+    "react-virtualized-select": "^1.0.0",
+    "redux-form": "^6.0.0-alpha.14",
+    "redux-promise": "^0.5.3",
+    "redux-thunk": "^2.0.1"
+  },
+  "dependencies": {
+    "babel-cli": "^6.6.5",
+    "babel-preset-es2015": "^6.6.0",
+    "babel-preset-react": "^6.5.0",
+    "babel-preset-stage-0": "^6.5.0",
+    "classnames": "^2.2.5",
+    "css-modules-require-hook": "^4.0.0",
+    "dotenv": "^2.0.0",
+    "electron-debug": "^0.6.0",
+    "electron-json-storage": "^2.0.0",
+    "electron-positioner": "^3.0.0",
+    "electron-prebuilt": "^0.36.0",
+    "lodash": "^4.13.1",
+    "material-design-lite": "^1.1.3",
+    "menubar": "^4.1.0",
+    "node-fetch": "^1.5.2",
+    "node-schedule": "^1.1.0",
+    "parse-link-header": "^0.4.1",
+    "pify": "^2.3.0",
+    "postcss": "^6.0.0"
+  }
 }

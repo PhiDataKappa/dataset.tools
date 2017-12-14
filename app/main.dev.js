@@ -10,7 +10,7 @@
  *
  * @flow
  */
-import dotenv from 'dotenv';
+
 import { app, BrowserWindow } from 'electron';
 import MenuBuilder from './menu';
 
