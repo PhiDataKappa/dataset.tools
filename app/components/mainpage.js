@@ -14,14 +14,18 @@ import styled from 'styled-components';
 import Datasets from '../containers/Datasets';
 import Projects from '../containers/Projects';
 import FlatButton from 'material-ui/FlatButton';
+import { Redirect } from 'react-router';
+
 
 export default class MainPage extends Component {
   constructor(props){
     super(props);
+    console.log('props',props);
     this.state = {
       open:false,
       projects: [],
-      mainview: 'Projects'
+      mainview: 'Projects',
+      logout:false
     }
   }
   componentDidMount() {
@@ -30,13 +34,22 @@ export default class MainPage extends Component {
       axios.get('http://localhost:8080/getUserDatasets', {params: {accessToken: this.props.token}})
       .then((data) => {
         console.log('this is data in componentDidMount', data);
-        this.props.addUserData(data.data.records);
+        this.props.actions.mainPageActions.addUserData(data.data.records);
         console.log(data.data.records);
         //this.setState({projects: data.data.records});
 
       })
     } else { console.log("Where's my token")}
   }
+
+
+  logout = () => {
+    this.props.actions.homePageActions.setShouldRedirect(false);
+    this.setState({logout:true})
+  }
+
+
+
   render() {
     //functions
     // console.log(this.props)
@@ -69,7 +82,7 @@ export default class MainPage extends Component {
     return (
       <div>
       <div>
-       <AppBar title="dataset.tools" showMenuIconButton={false}  style={positionTitle} iconElementRight={<Link to="/"><FlatButton label="Log Out" /></Link>} />
+       <AppBar title="dataset.tools" showMenuIconButton={false}  style={positionTitle} iconElementRight={<FlatButton onClick={this.logout} label="Log Out" />} />
        <div className='mainContent'>
         {MainView()}
        </div>
@@ -79,6 +92,9 @@ export default class MainPage extends Component {
         <MenuItem>Upload DataSet</MenuItem>
       </Drawer>
       </div>
+      {this.state.logout && (
+        <Redirect to ={'/'}/>
+      )}
     </div>
     );
   }

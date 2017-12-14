@@ -15,9 +15,13 @@ export default class Datasets extends Component {
   }
  render() {
    var hasUserData = Array.isArray(this.props.userData) ? this.props.userData : [];
+   var tableStyles = {
+     height: '500px',
+     overflowY: 'auto'
+   }
    return (
-     <div className='datasetTable'>
-     <Table onRowSelection={this.handleRowSelection}>
+     <div className='datasetTable' style={tableStyles}>
+     <Table onRowSelection={this.handleRowSelection} style="overflow-y:auto">
         <TableHeader>
           <TableRow>
             <TableHeaderColumn>This Won't Show</TableHeaderColumn>

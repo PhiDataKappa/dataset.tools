@@ -16,6 +16,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import MainPage from '../components/mainpage';
 import * as MainPageActions from '../actions/mainpage';
+import * as HomePageActions from '../actions/homepage';
 
 function mapStateToProps(state) {
 return state;
@@ -27,7 +28,12 @@ return state;
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(MainPageActions, dispatch);
+  return {
+    actions: {
+      mainPageActions: bindActionCreators(MainPageActions, dispatch),
+      homePageActions: bindActionCreators(HomePageActions, dispatch)
+    }
+  }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(MainPage);

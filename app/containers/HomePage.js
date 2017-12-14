@@ -19,7 +19,8 @@ import * as HomeActions from '../actions/homepage';
 
 function mapStateToProps(state) {
   return {
-    access_token: state.token
+    access_token: state.token,
+    shouldRedirect: state.shouldRedirect
   };
 }
 
