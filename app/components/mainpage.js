@@ -54,7 +54,6 @@ export default class MainPage extends Component {
     //functions
     // console.log(this.props)
     // console.log(this.props.token);
-    var that = this;
 
     var forceNavDown = {'top': '72px'};
     var positionTitle = {'top': '-8px', 'backgroundColor':grey700, 'height':'73px'};
@@ -62,13 +61,13 @@ export default class MainPage extends Component {
   var switchView = function (view) {
     console.log('view at first');
     console.log('running switchView');
-    that.props.changeView(view);
+    this.props.actions.mainPageActions.changeView(view);
 
   }
   //      <p>{JSON.stringify(this.state.projects)}</p>
 
   var MainView = function (view) {
-    var view = that.props.mainView  || 'Datasets';
+    var view = this.props.mainView  || 'Datasets';
     if (view === 'Projects'){
       return <Projects/>;
     } else {
