@@ -1,7 +1,7 @@
 /**
  * Builds the DLL for development electron renderer process
  */
-
+import dotenv from 'dotenv';
 import webpack from 'webpack';
 import path from 'path';
 import merge from 'webpack-merge';

@@ -1,7 +1,7 @@
 /**
  * Base webpack config used across other specific configs
  */
-
+import dotenv from 'dotenv';
 import path from 'path';
 import webpack from 'webpack';
 import { dependencies as externals } from './app/package.json';
