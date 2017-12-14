@@ -6,3 +6,10 @@ export function addAccessToken(token) {
     text: token
   };
 }
+
+export function setShouldRedirect(bool) {
+  return {
+    type: 'SET_SHOULD_REDIRECT',
+    text: bool
+  }
+}
