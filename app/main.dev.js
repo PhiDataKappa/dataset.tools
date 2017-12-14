@@ -12,6 +12,8 @@
  */
 import { app, BrowserWindow } from 'electron';
 import MenuBuilder from './menu';
+const url = require('url')
+const path = require('path')
 
 let mainWindow = null;
 
@@ -84,3 +86,57 @@ app.on('ready', async () => {
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
 });
+
+
+// app.on('activate', () => {
+//     mainWindow = new BrowserWindow({
+//       show: false,
+//       width: 1024,
+//       height: 738
+//     })
+//   })
+
+
+function createWindow () {
+  // Create the browser window.
+  let mainWindow = new BrowserWindow({width: 1024,height: 738})
+
+  // and load the index.html of the app.
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'app.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+
+  // Open the DevTools.
+  mainWindow.webContents.openDevTools()
+
+  // Emitted when the window is closed.
+  mainWindow.on('closed', () => {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null
+  })
+}
+
+app.on('activate', () => {
+  // On macOS it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (mainWindow === null) {
+    createWindow()
+  }
+})
+
+
+//   app.on('activate', () => {
+//   // On macOS it's common to re-create a window in the app when the
+//   // dock icon is clicked and there are no other windows open.
+//   // if (win === null) {
+//     mainWindow = new BrowserWindow({
+//       show: false,
+//       width: 1024,
+//       height: 738
+//     })
+//   // }
+// })
