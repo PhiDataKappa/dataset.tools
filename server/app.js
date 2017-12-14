@@ -55,7 +55,7 @@ app.get('/', function (req, res) {
       // console.log('line 54&&&&&&&&&&&&&&&', response);
       if (response.data.access_token){
         var at = response.data.access_token
-        console.log('response cookie',response);
+        // console.log('response cookie',response);
         res.cookie('cookiename',at,{maxAge:90000,httpOnly:false});
         //res.cookie TODO: attach token to response
         res.sendFile(path.resolve('./app/app.html'))
