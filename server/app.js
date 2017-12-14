@@ -84,6 +84,7 @@ app.get('/getUserDatasets', (req, res) => {
     if (error) {
       console.log(error);
     }
+    console.log(body);
     // console.log(body, 'body', response, 'response');
     res.send(body);
   })
@@ -103,7 +104,11 @@ app.get('/getdata', (req,res) =>{
   res.send('hi');
 });
 
-
+app.get('/downloadDatasets', (req, res) => {
+  console.log('In server /downloadDatasets');
+  console.log(req.query);
+  res.send('hi');
+})
 
 
 // app.use(express.static('./app/app.html'));
