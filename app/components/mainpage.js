@@ -51,6 +51,7 @@ export default class MainPage extends Component {
 
 
   render() {
+    var that = this;
     //functions
     // console.log(this.props)
     // console.log(this.props.token);
@@ -61,13 +62,13 @@ export default class MainPage extends Component {
   var switchView = function (view) {
     console.log('view at first');
     console.log('running switchView');
-    this.props.actions.mainPageActions.changeView(view);
+    that.props.actions.mainPageActions.changeView(view);
 
   }
   //      <p>{JSON.stringify(this.state.projects)}</p>
 
   var MainView = function (view) {
-    var view = this.props.mainView  || 'Datasets';
+    var view = that.props.mainView  || 'Datasets';
     if (view === 'Projects'){
       return <Projects/>;
     } else {
