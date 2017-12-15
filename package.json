@@ -187,6 +187,10 @@
     "axios": "^0.17.1",
     "base64url": "^2.0.0",
     "cookie-parser": "^1.4.3",
+<<<<<<< HEAD
+=======
+    "cookieparser": "^0.1.0",
+>>>>>>> add cookieparser to package
     "devtron": "^1.4.0",
     "dotenv": "^4.0.0",
     "electron-debug": "^1.4.0",
