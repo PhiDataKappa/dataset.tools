@@ -17,9 +17,9 @@ export default class Datasets extends Component {
     console.log('this.props in dataset',this.props)
   }
 
- getFile(id, name) {
+ getFile(owner, id, name, token) {
    console.log('getting file' + name);
-   axios.get('http://localhost:8080/downloadDatasets', {params: {projectID: id, file: name}})
+   axios.get('http://localhost:8080/downloadDatasets', {params: {owner: owner, projectID: id, file: name, at: token}})
    .then((data) => {
      console.log('this is data in getFile', data);
      //this.props.actions.mainPageActions.addUserData(data.data.records);
@@ -53,7 +53,7 @@ export default class Datasets extends Component {
             <TableRowColumn></TableRowColumn>
             <TableRowColumn>{file.name}</TableRowColumn>
             <TableRowColumn>{(file.sizeInBytes/1000)} kb</TableRowColumn>
-            <TableRowColumn><RaisedButton onClick={() => this.getFile(project.id,file.name)}>Download</RaisedButton></TableRowColumn>
+            <TableRowColumn><RaisedButton onClick={() => this.getFile(project.owner, project.id, file.name, this.props.token)}>Download</RaisedButton></TableRowColumn>
           </TableRow>
             )
           )}
