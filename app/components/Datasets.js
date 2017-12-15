@@ -40,6 +40,7 @@ export default class Datasets extends Component {
           <TableRow>
             <TableHeaderColumn>This Won't Show</TableHeaderColumn>
             <TableHeaderColumn>Name</TableHeaderColumn>
+            <TableHeaderColumn>Project</TableHeaderColumn>
             <TableHeaderColumn>Size</TableHeaderColumn>
             <TableHeaderColumn>Download</TableHeaderColumn>
           </TableRow>
@@ -52,6 +53,7 @@ export default class Datasets extends Component {
             <TableRow>
             <TableRowColumn></TableRowColumn>
             <TableRowColumn>{file.name}</TableRowColumn>
+            <TableRowColumn>{project.title}</TableRowColumn>
             <TableRowColumn>{(file.sizeInBytes/1000)} kb</TableRowColumn>
             <TableRowColumn><RaisedButton onClick={() => this.getFile(project.owner, project.id, file.name, this.props.token)}>Download</RaisedButton></TableRowColumn>
           </TableRow>
