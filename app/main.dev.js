@@ -13,7 +13,7 @@
 import path from 'path';
 import url from 'url';
 import {app, crashReporter, BrowserWindow, Menu} from 'electron';
-const window = require('electron-window');
+// const window = require('electron-window');
 // import {app, BrowserWindow, Menu} from 'electron';
 // import { app, BrowserWindow } from 'electron';
 import MenuBuilder from './menu';
@@ -29,26 +29,26 @@ const isProduction = (process.env.NODE_ENV === 'production');
 let mainWindow = null;
 // let forceQuit = false;
 
-var menubar = require('menubar')
-var mb = menubar()
-mb.on('ready', function ready () {
-  console.log('app is ready')
-  // your app code here
-})
-
-let win
+// var menubar = require('menubar')
+// var mb = menubar()
+// mb.on('ready', function ready () {
+//   console.log('app is ready')
+//   // your app code here
+// })
+//
+// let win
 
 // tray and menubar
-function createWindow() {
-   win = new BrowserWindow({width: 1000, height: 400})
-   win.loadURL(url.format ({
-      pathname: path.join(__dirname, 'app.html'),
-      protocol: 'file:',
-      slashes: true
-   }))
-}
+// function createWindow() {
+//    win = new BrowserWindow({width: 1000, height: 400})
+//    win.loadURL(url.format ({
+//       pathname: path.join(__dirname, 'app.html'),
+//       protocol: 'file:',
+//       slashes: true
+//    }))
+// }
 
-app.on('ready', createWindow)
+// app.on('ready', createWindow)
 
 if (isProduction) {
   const sourceMapSupport = require('source-map-support');
@@ -113,7 +113,7 @@ app.on('ready', async () => {
     resizable: true,
     center: true,
     frame: true
-  });
+    });
 
   // mainWindow.loadURL(`file://${__dirname}/app.html`);
   mainWindow.loadURL(url.format({
@@ -161,30 +161,42 @@ app.on('ready', async () => {
   //     mainWindow = null;
   //   });
   // }
-
-  const menuBuilder = new MenuBuilder(mainWindow);
-  menuBuilder.buildMenu();
-
-
-  if (isDevelopment) {
-    // auto-open dev tools
-    mainWindow.webContents.openDevTools();
-
-    // add inspect element on right click menu
-    mainWindow.webContents.on('context-menu', (e, props) => {
-      Menu.buildFromTemplate([{
-        label: 'Inspect element',
-        click() {
-          mainWindow.inspectElement(props.x, props.y);
-        }
-      }]).popup(mainWindow);
-    });
-  }
+//
+//   const menuBuilder = new MenuBuilder(mainWindow);
+//   menuBuilder.buildMenu();
+//
+//
+//   if (isDevelopment) {
+//     // auto-open dev tools
+//     mainWindow.webContents.openDevTools();
+//
+//     // add inspect element on right click menu
+//     mainWindow.webContents.on('context-menu', (e, props) => {
+//       Menu.buildFromTemplate([{
+//         label: 'Inspect element',
+//         click() {
+//           mainWindow.inspectElement(props.x, props.y);
+//         }
+//       }]).popup(mainWindow);
+//     });
+//   }
 });
 
 function createWindow () {
   // Create the browser window.
-  let mainWindow = new BrowserWindow({width: 1024,height: 738})
+  // let mainWindow = new BrowserWindow({width: 1024,height: 738})
+  let mainWindow = new BrowserWindow({
+    show: false,
+    width: 1024,
+    minWidth: 340,
+    minHeight: 480,
+    height: 800,
+    // "use-content-size": true,
+    resizable: true,
+    center: true,
+     icon: __dirname + '../Resources/assets/dataset.tools_dock_color_bw.png',
+    frame: true
+    });
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
@@ -208,7 +220,7 @@ function createWindow () {
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  // if (mainWindow === null) {
+  if (mainWindow === null) {
     createWindow()
-  // }
+  }
 })
