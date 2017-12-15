@@ -3,6 +3,9 @@
   /*top: 30%;
   left: 10px;*/
   text-align: center;
+  align-content: stretch;
+  background-image: url("../../Resources/dw.logo_greyscale.svg");
+  background-size: 100%;
 }
 
 .container h2 {
