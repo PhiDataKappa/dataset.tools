@@ -16,7 +16,7 @@ export default class Home extends Component {
       fireRedirect:false
     }
   }
-
+  
   componentDidMount() {
     if (document.cookie && this.props.shouldRedirect){
       var cookie = document.cookie;

@@ -187,6 +187,10 @@
     "axios": "^0.17.1",
     "base64url": "^2.0.0",
     "cookie-parser": "^1.4.3",
+<<<<<<< HEAD
+=======
+
+>>>>>>> 88b2ec80c1e43ea6df07f72dfd84259834c076ec
     "cookieparser": "^0.1.0",
     "devtron": "^1.4.0",
     "dotenv": "^4.0.0",
