@@ -16,6 +16,8 @@ import {app, crashReporter, BrowserWindow, Menu} from 'electron';
 // import {app, BrowserWindow, Menu} from 'electron';
 // import { app, BrowserWindow } from 'electron';
 import MenuBuilder from './menu';
+const url = require('url')
+const path = require('path')
 
 const isDevelopment = (process.env.NODE_ENV === 'development');
 const isProduction = (process.env.NODE_ENV === 'production');
@@ -151,3 +153,34 @@ app.on('ready', async () => {
     });
   }
 });
+
+function createWindow () {
+  // Create the browser window.
+  let mainWindow = new BrowserWindow({width: 1024,height: 738})
+
+  // and load the index.html of the app.
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'app.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+
+  // Open the DevTools.
+  mainWindow.webContents.openDevTools()
+
+  // Emitted when the window is closed.
+  mainWindow.on('closed', () => {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null
+  })
+}
+
+app.on('activate', () => {
+  // On macOS it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (mainWindow === null) {
+    createWindow()
+  }
+})
