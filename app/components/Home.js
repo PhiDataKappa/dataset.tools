@@ -18,12 +18,11 @@ export default class Home extends Component {
   }
 
   componentDidMount() {
-    if (document.cookie && this.props.shouldRedirect){
+    if (document.cookie){
       var cookie = document.cookie;
       cookie = cookie.split('=')[1];
       console.log(cookie);
       this.props.addAccessToken(cookie);
-      this.props.setShouldRedirect(true);
       this.setState({fireRedirect:true})
     }
     //if token

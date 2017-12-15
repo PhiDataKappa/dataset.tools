@@ -12,7 +12,8 @@ import MenuItem from 'material-ui/MenuItem';
 import Flexbox from 'flexbox-react';
 import styled from 'styled-components';
 import Datasets from '../containers/Datasets';
-import Projects from '../containers/Projects';
+import Projects from '../containers/Projects'
+import Upload from '../containers/Upload';
 import FlatButton from 'material-ui/FlatButton';
 import { Redirect } from 'react-router';
 
@@ -89,7 +90,7 @@ export default class MainPage extends Component {
       <Drawer className='nav' open={true} containerStyle={forceNavDown}>
         <MenuItem onClick={() => switchView('Projects')}>Projects</MenuItem>
         <MenuItem onClick={() => switchView('Datasets')}>Datasets </MenuItem>
-        <MenuItem>Upload DataSet</MenuItem>
+        <MenuItem onClick={() => switchView('Upload')}>Upload DataSet</MenuItem>
       </Drawer>
       </div>
       {this.state.logout && (
