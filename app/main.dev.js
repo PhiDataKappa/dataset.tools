@@ -16,14 +16,15 @@ import {app, crashReporter, BrowserWindow, Menu} from 'electron';
 // import {app, BrowserWindow, Menu} from 'electron';
 // import { app, BrowserWindow } from 'electron';
 import MenuBuilder from './menu';
-const url = require('url')
-const path = require('path')
+
+// const url = require('url')
+// const path = require('path')
 
 const isDevelopment = (process.env.NODE_ENV === 'development');
 const isProduction = (process.env.NODE_ENV === 'production');
 
 let mainWindow = null;
-let forceQuit = false;
+// let forceQuit = false;
 
 
 if (isProduction) {
@@ -67,11 +68,11 @@ const installExtensions = async () => {
  * ========================= Add event listeners...
  */
 
-app.on('window-all-closed', () => {
-  // Respect the OSX convention of having the application in memory even
-  // after all windows have been closed
-  app.quit();
-});
+// app.on('window-all-closed', () => {
+//   // Respect the OSX convention of having the application in memory even
+//   // after all windows have been closed
+//   app.quit();
+// });
 
 
 app.on('ready', async () => {
@@ -115,24 +116,24 @@ app.on('ready', async () => {
     mainWindow.focus();
   });
 
-  if (process.platform === 'darwin') {
-    mainWindow.on('closed', () => {
-      mainWindow = null;
-    });
-
-    app.on('activate', () => {
-      mainWindow.show();
-      mainWindow.focus();
-    });
-
-    app.on('before-quit', () => {
-      forceQuit = true;
-    });
-  } else {
-    mainWindow.on('closed', () => {
-      mainWindow = null;
-    });
-  }
+  // if (process.platform === 'darwin') {
+  //   mainWindow.on('closed', () => {
+  //     mainWindow = null;
+  //   });
+  //
+  //   app.on('activate', () => {
+  //     mainWindow.show();
+  //     mainWindow.focus();
+  //   });
+  //
+  //   app.on('before-quit', () => {
+  //     forceQuit = true;
+  //   });
+  // } else {
+  //   mainWindow.on('closed', () => {
+  //     mainWindow = null;
+  //   });
+  // }
 
   const menuBuilder = new MenuBuilder(mainWindow);
   menuBuilder.buildMenu();
@@ -180,7 +181,7 @@ function createWindow () {
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
+  // if (mainWindow === null) {
     createWindow()
-  }
+  // }
 })
