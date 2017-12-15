@@ -11,11 +11,12 @@ export default class Upload extends Component {
   }
 
 render() {
-  return (
-    <div>
-      <TextField hintText="Title"></TextField>
-      <TextField hintText="Description"></TextField>
-      <FlatButton label="Upload"></FlatButton> 
-    </div>
-  )
+    return (
+      <div>
+        <TextField hintText="Title"></TextField>
+        <TextField hintText="Description"></TextField>
+        <FlatButton label="Upload"></FlatButton>
+      </div>
+    )
+  }
 }
