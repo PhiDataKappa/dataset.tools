@@ -53,3 +53,8 @@ a:hover {
 .projectTable {
   margin-top: -10px;
 }
+.oauthBtn {
+  display: flex;
+  vertical-align: middle;
+  justify-content: center;
+}
