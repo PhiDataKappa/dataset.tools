@@ -72,6 +72,8 @@ export default class MainPage extends Component {
     var view = that.props.mainView  || 'Datasets';
     if (view === 'Projects'){
       return <Projects/>;
+    } else if (view === 'Upload') {
+      return <Upload/>;
     } else {
       return <Datasets/>;
     }

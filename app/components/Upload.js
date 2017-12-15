@@ -10,12 +10,15 @@ export default class Upload extends Component {
     console.log('this.props in upload',this.props)
   }
 
-render() {
-  return (
-    <div>
-      <TextField hintText="Title"></TextField>
-      <TextField hintText="Description"></TextField>
-      <FlatButton label="Upload"></FlatButton> 
-    </div>
-  )
+  render() {
+    return (
+      <div>
+        <TextField hintText="Title"></TextField>
+        <br/>
+        <TextField hintText="Description"></TextField>
+        <br/>
+        <FlatButton label="Upload"></FlatButton>
+      </div>
+    )
+  }
 }

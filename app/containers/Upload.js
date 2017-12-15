@@ -12,4 +12,4 @@ function mapStateToProps(state) {
 //   return bindActionCreators(ProjectsActions, dispatch);
 // }
 
-export default connect(mapStateToProps)(Projects);
+export default connect(mapStateToProps)(Upload);
