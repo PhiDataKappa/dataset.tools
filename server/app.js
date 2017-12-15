@@ -92,6 +92,46 @@ app.get('/getUserDatasets', (req, res) => {
   //var token = req.query
 })
 
+app.get('/downloadDatasets', (req, res) => {
+  console.log('In server /downloadDatasets');
+  console.log(req.query);
+  var owner = req.query.owner;
+  var id = req.query.projectID;
+  var file = req.query.file;
+  var url = `https://api.data.world/v0/file_download/${owner}/${id}/${file}`;
+  var accessToken = req.query.at;
+
+  var options = { method: 'GET',
+    url: url,
+    headers: { authorization: 'Bearer ' + accessToken},
+    body: '{}'
+  };
+
+  /*
+  var options = { method: 'GET',
+    url: `https://api.data.world/file_download/`,
+    owner: owner,
+    id: id,
+    file: file,
+    headers: { authorization: 'Bearer ' + accessToken},
+    body: '{}'
+  };
+*/
+  console.log('options', options);
+  request(options, function(error, response, body){
+    if (error) {
+      console.err(error);
+    }
+
+    //FILE SIZE CAN BE HUGE, THINK BEFORE SENDING; USE WRITESTREAM?
+    //////console.log(body);
+    /////!!!!!!!
+    //res.send(body);
+    res.end()
+  })
+//file_download/{owner}/{id}/{file}
+  //res.send('hi');
+})
 
 // app.use(express.static(path.join(__dirname, '../dll')))
 app.get('/dll/renderer.dev.dll.js', (req, res) => {
@@ -104,11 +144,7 @@ app.get('/getdata', (req,res) =>{
   res.send('hi');
 });
 
-app.get('/downloadDatasets', (req, res) => {
-  console.log('In server /downloadDatasets');
-  console.log(req.query);
-  res.send('hi');
-})
+
 
 
 // app.use(express.static('./app/app.html'));
