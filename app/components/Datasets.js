@@ -52,7 +52,7 @@ export default class Datasets extends Component {
 
             <TableRow>
             <TableRowColumn></TableRowColumn>
-            <TableRowColumn>{file.name}</TableRowColumn>
+            <TableRowColumn onClick = {() => console.log('clicked: ' + file.name)}>{file.name}</TableRowColumn>
             <TableRowColumn>{project.title}</TableRowColumn>
             <TableRowColumn>{(file.sizeInBytes/1000)} kb</TableRowColumn>
             <TableRowColumn><RaisedButton onClick={() => this.getFile(project.owner, project.id, file.name, this.props.token)}>Download</RaisedButton></TableRowColumn>
