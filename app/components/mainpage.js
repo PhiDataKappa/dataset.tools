@@ -12,10 +12,11 @@ import MenuItem from 'material-ui/MenuItem';
 import Flexbox from 'flexbox-react';
 import styled from 'styled-components';
 import Datasets from '../containers/Datasets';
-import Projects from '../containers/Projects'
-import Upload from '../containers/Upload';
+import Projects from '../containers/Projects';
 import FlatButton from 'material-ui/FlatButton';
 import { Redirect } from 'react-router';
+import {List, ListItem} from 'material-ui/List';
+import Divider from 'material-ui/Divider';
 
 
 export default class MainPage extends Component {
@@ -72,8 +73,6 @@ export default class MainPage extends Component {
     var view = that.props.mainView  || 'Datasets';
     if (view === 'Projects'){
       return <Projects/>;
-    } else if (view === 'Upload') {
-      return <Upload/>;
     } else {
       return <Datasets/>;
     }
@@ -81,24 +80,35 @@ export default class MainPage extends Component {
 
 //  return <Projects/>
 //}
-
+/*
+<Drawer className='nav' open={true} containerStyle={forceNavDown}>
+  <MenuItem onClick={() => switchView('Projects')}>Projects</MenuItem>
+  <MenuItem onClick={() => switchView('Datasets')}>Datasets </MenuItem>
+  <MenuItem>Upload DataSet</MenuItem>
+</Drawer>
+*/
     return (
       <div>
-      <div>
-       <AppBar title="dataset.tools" showMenuIconButton={false}  style={positionTitle} iconElementRight={<FlatButton onClick={this.logout} label="Log Out" />} />
-       <div className='mainContent'>
-        {MainView()}
-       </div>
-      <Drawer className='nav' open={true} containerStyle={forceNavDown}>
-        <MenuItem onClick={() => switchView('Projects')}>Projects</MenuItem>
-        <MenuItem onClick={() => switchView('Datasets')}>Datasets </MenuItem>
-        <MenuItem onClick={() => switchView('Upload')}>Upload DataSet</MenuItem>
-      </Drawer>
-      </div>
+        <div>
+          <AppBar title="dataset.tools" showMenuIconButton={false}  style={positionTitle} iconElementRight={<FlatButton onClick={this.logout} label="Log Out" />} />
+          <div className="Container" style={{display: 'flex', 'top': '62px', height: '100%' }}>
+            <div className="Sidebar" style={{flexShrink: 0, 'backgroundColor': 'black'}}>
+              <List >
+                <ListItem primaryText="Projets" onClick={() => switchView('Projects')} />
+                <ListItem primaryText="Datasets" onClick={() => switchView('Datasets')}/>
+                <ListItem primaryText="Upload Dataset" />
+              </List>
+              <Divider />
+            </div>
+            <div className='mainContent' style={{flexGrow: 1, flexShrink: 1}}>
+              {MainView()}
+            </div>
+          </div>
       {this.state.logout && (
         <Redirect to ={'/'}/>
       )}
     </div>
+  </div>
     );
   }
 }

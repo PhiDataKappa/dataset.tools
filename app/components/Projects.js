@@ -13,7 +13,6 @@ export default class Projects extends Component {
      <Table onRowSelection={this.handleRowSelection}>
         <TableHeader>
           <TableRow>
-            <TableHeaderColumn>This Won't Show</TableHeaderColumn>
             <TableHeaderColumn>Name</TableHeaderColumn>
             <TableHeaderColumn>Number of Files</TableHeaderColumn>
             <TableHeaderColumn>Download</TableHeaderColumn>
@@ -22,7 +21,6 @@ export default class Projects extends Component {
         <TableBody>
           { hasUserData.map((project, index) =>
             <TableRow>
-            <TableRowColumn></TableRowColumn>
             <TableRowColumn>{project.title}</TableRowColumn>
             <TableRowColumn>{(project.files.length)} Files</TableRowColumn>
             <TableRowColumn>Download</TableRowColumn>

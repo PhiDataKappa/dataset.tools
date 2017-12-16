@@ -1,0 +1,11 @@
+.mainContainer {
+    display: flex
+}
+
+.mainContent {
+  flex: 1
+}
+
+.sidebar {
+  flex: 5
+}

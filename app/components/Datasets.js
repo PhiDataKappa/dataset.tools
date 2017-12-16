@@ -29,7 +29,7 @@ export default class Datasets extends Component {
    console.log(event.target.innerHTML);
    var dataset = event.target.innerHTML;
    console.log(dataset);
-   if (column === 1) {
+   if (column === 0) {
      this.props.setSelectedDataset(dataset);
    }
  }
@@ -53,9 +53,9 @@ export default class Datasets extends Component {
    var showDatasetInfo = function () {
      var curDataset = this.props.selectedDataset  || false;
      if (curDataset){
-       return <div><p>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</p></div>;
+       return <div><p>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</p></div>;
      } else {
-       return <div><p>??????????????????????????????????????????????????????????????????</p></div>;
+       return <div><p>?????????????????????????????</p></div>;
      }
      //return <div><p>??????????????????????????????????????????????????????????????????</p></div>
    }
@@ -66,7 +66,6 @@ export default class Datasets extends Component {
      <Table onRowSelection={this.handleRowSelection} onCellClick={this.showDatasetInfo.bind(this)} >
         <TableHeader>
           <TableRow>
-            <TableHeaderColumn>This Won't Show</TableHeaderColumn>
             <TableHeaderColumn>Name</TableHeaderColumn>
             <TableHeaderColumn>Project</TableHeaderColumn>
             <TableHeaderColumn>Size</TableHeaderColumn>
@@ -77,7 +76,6 @@ export default class Datasets extends Component {
           { hasUserData.map((project, index) =>
               project.files.map((file, index2) =>
             <TableRow>
-            <TableRowColumn></TableRowColumn>
             <TableRowColumn>{file.name}</TableRowColumn>
             <TableRowColumn>{project.title}</TableRowColumn>
             <TableRowColumn>{(file.sizeInBytes/1000)} kb</TableRowColumn>
