@@ -12,14 +12,21 @@
  */
 import path from 'path';
 import url from 'url';
-import {app, crashReporter, BrowserWindow, Menu} from 'electron';
+import {app, crashReporter, BrowserWindow, Menu, Tray } from 'electron';
 // const window = require('electron-window');
 // import {app, BrowserWindow, Menu} from 'electron';
 // import { app, BrowserWindow } from 'electron';
 import MenuBuilder from './menu';
-
-// const url = require('url')
 // const path = require('path')
+// const electron = require('electron')
+// const ipc = electron.ipcMain
+// const app = electron.app
+// const Menu = electron.Menu
+// const Tray = electron.Tray
+// const crashReporter = electron.crashReporter
+// const BrowserWindow = electron.BrowserWindow
+
+
 
 const isDevelopment = (process.env.NODE_ENV === 'development');
 const isProduction = (process.env.NODE_ENV === 'production');
@@ -96,6 +103,56 @@ const installExtensions = async () => {
 //   // after all windows have been closed
 //   app.quit();
 // });
+// const {app, Menu, Tray} = require('electron')
+
+let tray = null
+app.on('ready', () => {
+  tray = new Tray('Resources/dataset.tools_tray_icon_menuIsVisible.png')
+  const contextMenu = Menu.buildFromTemplate([
+    {label: 'Item1', type: 'radio'},
+    {label: 'Item2', type: 'radio'},
+    {label: 'Item3', type: 'radio', checked: true},
+    {label: 'Item4', type: 'radio'}
+    // {
+    //   label: 'Remove',
+    //   click: function () {
+    //     event.sender.send('tray-removed')
+    //   }
+  ])
+  tray.setToolTip('dataset.tools')
+  tray.setContextMenu(contextMenu)
+
+  // let appIcon = null
+  //
+  // ipc.on('put-in-tray', function (event) {
+  //   const iconName = process.platform === 'win32' ? 'windows-icon.png' : 'iconTemplate.png'
+  //   const iconPath = path.join(__dirname, iconName)
+  //   appIcon = new Tray(iconPath)
+  //   const contextMenu = Menu.buildFromTemplate([{
+  //     label: 'Remove',
+  //     click: function () {
+  //       event.sender.send('tray-removed')
+  //     }
+  //   }])
+  //   appIcon.setToolTip('Electron Demo in the tray.')
+  //   appIcon.setContextMenu(contextMenu)
+  // })
+  //
+  // ipc.on('remove-tray', function () {
+  //   appIcon.destroy()
+  // })
+  //
+  // app.on('window-all-closed', function () {
+  //   if (appIcon) appIcon.destroy()
+  // })
+
+
+
+
+
+})
+
+
 
 
 app.on('ready', async () => {
