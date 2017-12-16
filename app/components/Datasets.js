@@ -9,7 +9,7 @@ import {
 } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
-
+var fs = require('fs');
 export default class Datasets extends Component {
   constructor(props){
     super(props);
@@ -40,6 +40,32 @@ export default class Datasets extends Component {
    .then((data) => {
      console.log('this is data in getFile', data);
      //this.props.actions.mainPageActions.addUserData(data.data.records);
+     //-------Added---------------
+     // Change the content of the file as you want
+     // or either set fileContent to null to create an empty file
+     var fileContent = JSON.stringify(data);
+
+     // The absolute path of the new file with its name
+     var filepath = "mynewfile.csv";
+     var path = (String(process.cwd()).split('/'));
+     console.log('path after split',path)
+     path.pop()
+      var path = (String(path.join('/') + `/${name}`))
+     console.log('path',path)
+     fs.writeFileSync(path ,fileContent,(err) => {
+       if (err) throw err;
+       console.log("The file was succesfully saved!");
+   });
+
+
+
+
+     // fs.writeFile(filepath, fileContent, (err) => {
+     //     if (err) throw err;
+     //
+     //     console.log("The file was succesfully saved!");
+     // });
+     //-------Added---------------
    })
  }
 

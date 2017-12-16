@@ -10,6 +10,7 @@ var request = require("request");
 var rp = require('request-promise');
 // var base64 = require('url-safe-base64');
 var cookieParser = require('cookie-parser');
+var fs = require('fs');
 
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
@@ -126,11 +127,13 @@ app.get('/downloadDatasets', (req, res) => {
     //FILE SIZE CAN BE HUGE, THINK BEFORE SENDING; USE WRITESTREAM?
     //////console.log(body);
     /////!!!!!!!
-    //res.send(body);
-    res.end()
+    res.send(body);
+
+    // res.end()
+
   })
 //file_download/{owner}/{id}/{file}
-  //res.send('hi');
+  // res.send('hi');
 })
 
 // app.use(express.static(path.join(__dirname, '../dll')))
