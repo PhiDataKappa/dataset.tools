@@ -13,9 +13,26 @@ import axios from 'axios';
 export default class Datasets extends Component {
   constructor(props){
     super(props);
-    console.log('props in dataset',props)
-    console.log('this.props in dataset',this.props)
+    console.log('props in dataset',props);
+    console.log('this.props in dataset',this.props);
   }
+
+ componentDidMount() {
+   console.log('mounting Datasets');
+   this.props.setSelectedDataset(null);
+ }
+
+ showDatasetInfo(row, column, event) {
+   console.log('clicked');
+   console.log('this')
+   console.log(row, column, event);
+   console.log(event.target.innerHTML);
+   var dataset = event.target.innerHTML;
+   console.log(dataset);
+   if (column === 1) {
+     this.props.setSelectedDataset(dataset);
+   }
+ }
 
  getFile(owner, id, name, token) {
    console.log('getting file' + name);
@@ -33,9 +50,20 @@ export default class Datasets extends Component {
      overflowY: 'auto'
    }
    var clicked = () => {console.log('clicked')}
+   var showDatasetInfo = function () {
+     var curDataset = this.props.selectedDataset  || false;
+     if (curDataset){
+       return <div><p>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</p></div>;
+     } else {
+       return <div><p>??????????????????????????????????????????????????????????????????</p></div>;
+     }
+     //return <div><p>??????????????????????????????????????????????????????????????????</p></div>
+   }
+   //onCellClick={console.log(rowNumber, columnID, 'clicked')}
    return (
+     <div>
      <div className='datasetTable' style={tableStyles}>
-     <Table onRowSelection={this.handleRowSelection}>
+     <Table onRowSelection={this.handleRowSelection} onCellClick={this.showDatasetInfo.bind(this)} >
         <TableHeader>
           <TableRow>
             <TableHeaderColumn>This Won't Show</TableHeaderColumn>
@@ -48,11 +76,9 @@ export default class Datasets extends Component {
         <TableBody>
           { hasUserData.map((project, index) =>
               project.files.map((file, index2) =>
-
-
             <TableRow>
             <TableRowColumn></TableRowColumn>
-            <TableRowColumn onClick = {() => console.log('clicked: ' + file.name)}>{file.name}</TableRowColumn>
+            <TableRowColumn>{file.name}</TableRowColumn>
             <TableRowColumn>{project.title}</TableRowColumn>
             <TableRowColumn>{(file.sizeInBytes/1000)} kb</TableRowColumn>
             <TableRowColumn><RaisedButton onClick={() => this.getFile(project.owner, project.id, file.name, this.props.token)}>Download</RaisedButton></TableRowColumn>
@@ -63,6 +89,8 @@ export default class Datasets extends Component {
         </TableBody>
       </Table>
    </div>
+   {showDatasetInfo.call(this)}
+ </div>
    )
  }
 }
