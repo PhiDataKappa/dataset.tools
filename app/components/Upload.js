@@ -17,7 +17,6 @@ export default class Upload extends Component {
         <br/>
         <TextField hintText="Description"></TextField>
         <br/>
-        <button label="showInFinder" className="btn btnGroup">Show in Finder</button>
         <button label="Upload" className="uploadButton btn btnGroup">Upload</button>
       </div>
     )

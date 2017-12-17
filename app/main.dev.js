@@ -224,3 +224,14 @@ app.on('activate', () => {
     createWindow()
   }
 })
+
+
+let uploadWin = null
+
+app.on('ready', () => {
+  uploadWin = new BrowserWindow({width: 800, height: 600})
+  uploadWin.loadURL(`file://${__dirname}/index.html`)
+  uploadWin.webContents.on('did-finish-load', () => {
+    uploadWin.webContents.send('ping', 'whoooooooh!')
+  })
+})
