@@ -57,10 +57,9 @@ export default class Datasets extends Component {
      // var path = (String(process.cwd()).split('/'));
      // console.log('path after split',path)
      // path.pop()
-     //  var path = (String(path.join('/') + `/${name}`))
-     // console.log('path',path)
      var path = storage + '/' + name;
-     fs.writeFileSync(storage ,fileContent,(err) => {
+     console.log('path:', path)
+     fs.writeFileSync(path ,fileContent,(err) => {
        if (err) throw err;
        console.log("The file was succesfully saved!");
    });
