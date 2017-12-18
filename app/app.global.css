@@ -58,3 +58,12 @@ a:hover {
   vertical-align: middle;
   justify-content: center;
 }
+
+
+body {
+  height:100vh
+}
+
+#root {
+  height:100vh
+}

@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import {orange500, blue500, grey700} from 'material-ui/styles/colors';
+import {orange500, blue500, grey700
+} from 'material-ui/styles/colors';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
 import MenuItem from 'material-ui/MenuItem';
@@ -12,7 +13,6 @@ import Flexbox from 'flexbox-react';
 import styled from 'styled-components';
 import Datasets from '../containers/Datasets';
 import Projects from '../containers/Projects';
-import Upload from '../containers/Upload';
 import FlatButton from 'material-ui/FlatButton';
 import { Redirect } from 'react-router';
 import {List, ListItem} from 'material-ui/List';
@@ -73,8 +73,6 @@ export default class MainPage extends Component {
     var view = that.props.mainView  || 'Datasets';
     if (view === 'Projects'){
       return <Projects/>;
-    } else if (view === 'Upload') {
-      return <Upload/>;
     } else {
       return <Datasets/>;
     }
@@ -90,15 +88,15 @@ export default class MainPage extends Component {
 </Drawer>
 */
     return (
-      <div>
-        <div>
+      <div className='firstDiv' style={{height: '100vh'}}> 
+        <div className='2ndDiv' style={{height: '100vh'}}>
           <AppBar title="dataset.tools" showMenuIconButton={false}  style={positionTitle} iconElementRight={<FlatButton onClick={this.logout} label="Log Out" />} />
           <div className="Container" style={{display: 'flex', 'top': '62px', height: '100%' }}>
             <div className="Sidebar" style={{flexShrink: 0, 'backgroundColor': 'black'}}>
               <List >
-                <ListItem primaryText="Projects" onClick={() => switchView('Projects')} />
+                <ListItem primaryText="Projets" onClick={() => switchView('Projects')} />
                 <ListItem primaryText="Datasets" onClick={() => switchView('Datasets')}/>
-                <ListItem primaryText="Upload Dataset" onClick={() => switchView('Upload')}/>
+                <ListItem primaryText="Upload Dataset" />
               </List>
               <Divider />
             </div>
