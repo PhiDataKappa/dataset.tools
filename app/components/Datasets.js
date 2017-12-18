@@ -21,11 +21,12 @@ export default class Datasets extends Component {
 
  componentDidMount() {
    console.log('mounting Datasets');
-   this.props.setSelectedDataset(null);
+   this.props.actions.DatasetsActions.setSelectedDataset(null);
  }
 
  componentWillUnmount() {
-   
+   console.log('unmounting dataset')
+   this.props.actions.ProjectsActions.setSelectedProject(null);
  }
 
  showDatasetInfo(row, column, event) {
@@ -36,7 +37,7 @@ export default class Datasets extends Component {
    var dataset = event.target.innerHTML;
    console.log(dataset);
    if (column === 0) {
-     this.props.setSelectedDataset(dataset);
+     this.props.actions.DatasetsActions.setSelectedDataset(dataset);
    }
  }
 

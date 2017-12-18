@@ -62,8 +62,11 @@ export default class MainPage extends Component {
     var positionTitle = {'top': '-8px', 'backgroundColor':grey700, 'height':'73px'};
 
   var switchView = function (view) {
-    console.log('view at first');
+    console.log('view at first', view);
     console.log('running switchView');
+    if (view === 'Datasets') {
+      that.props.actions.ProjectsActions.setSelectedProject(null);
+    }
     that.props.actions.mainPageActions.changeView(view);
 
   }

@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import MainPage from '../components/mainpage';
 import * as MainPageActions from '../actions/mainpage';
 import * as HomePageActions from '../actions/homepage';
+import * as ProjectsActions from '../actions/Projects';
 
 function mapStateToProps(state) {
 return state;
@@ -31,7 +32,8 @@ function mapDispatchToProps(dispatch) {
   return {
     actions: {
       mainPageActions: bindActionCreators(MainPageActions, dispatch),
-      homePageActions: bindActionCreators(HomePageActions, dispatch)
+      homePageActions: bindActionCreators(HomePageActions, dispatch),
+      ProjectsActions: bindActionCreators(ProjectsActions, dispatch)
     }
   }
 }
