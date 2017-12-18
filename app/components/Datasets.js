@@ -121,6 +121,8 @@ export default class Datasets extends Component {
             <TableRowColumn>{project.title}</TableRowColumn>
             <TableRowColumn>{(file.sizeInBytes/1000)} kb</TableRowColumn>
             <TableRowColumn><RaisedButton onClick={() => this.getFile(project.owner, project.id, file.name, this.props.token)}>Download</RaisedButton></TableRowColumn>
+            <TableRowColumn><RaisedButton onClick={() => this.getFile(project.owner, project.id, file.name, this.props.token)}>Upload</RaisedButton></TableRowColumn>
+            <TableRowColumn><RaisedButton onClick={() => require('electron').shell.openExternal('file:///Users/hackreactoratx1/Desktop/dataset.tools/Resources')}>Show in Finder</RaisedButton></TableRowColumn>
           </TableRow>
             )
           )}
