@@ -9,7 +9,7 @@ import {
 } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
-var fs = require('fs');
+
 export default class Datasets extends Component {
   constructor(props){
     super(props);
@@ -20,6 +20,10 @@ export default class Datasets extends Component {
  componentDidMount() {
    console.log('mounting Datasets');
    this.props.setSelectedDataset(null);
+ }
+
+ componentWillUnmount() {
+   
  }
 
  showDatasetInfo(row, column, event) {
@@ -40,43 +44,28 @@ export default class Datasets extends Component {
    .then((data) => {
      console.log('this is data in getFile', data);
      //this.props.actions.mainPageActions.addUserData(data.data.records);
-     //-------Added---------------
-     // Change the content of the file as you want
-     // or either set fileContent to null to create an empty file
-     var fileContent = JSON.stringify(data);
-
-     // The absolute path of the new file with its name
-     var filepath = "mynewfile.csv";
-     var path = (String(process.cwd()).split('/'));
-     console.log('path after split',path)
-     path.pop()
-      var path = (String(path.join('/') + `/${name}`))
-     console.log('path',path)
-     fs.writeFileSync(path ,fileContent,(err) => {
-       if (err) throw err;
-       console.log("The file was succesfully saved!");
-   });
-
-
-
-
-     // fs.writeFile(filepath, fileContent, (err) => {
-     //     if (err) throw err;
-     //
-     //     console.log("The file was succesfully saved!");
-     // });
-     //-------Added---------------
    })
  }
 
  render() {
+   var that = this
    var hasUserData = Array.isArray(this.props.userData) ? this.props.userData : [];
    var tableStyles = {
      height: '500px',
      overflowY: 'auto'
    }
    var clicked = () => {console.log('clicked')}
-   var showDatasetInfo = function () {
+
+   var selectedDataset = function () {
+      if (that.props.selectedProject === null) {
+       console.log('running 1')
+       return hasUserData;
+     } else {
+       console.log('running 2')
+       return [hasUserData[that.props.selectedProject]]
+     }
+   }
+   /*var showDatasetInfo = function () {
      var curDataset = this.props.selectedDataset  || false;
      if (curDataset){
        return <div><p>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</p></div>;
@@ -85,11 +74,14 @@ export default class Datasets extends Component {
      }
      //return <div><p>??????????????????????????????????????????????????????????????????</p></div>
    }
+      {thisshowDatasetInfo.call(this)}
+
+   */
    //onCellClick={console.log(rowNumber, columnID, 'clicked')}
    return (
      <div>
      <div className='datasetTable' style={tableStyles}>
-     <Table onRowSelection={this.handleRowSelection} onCellClick={this.showDatasetInfo.bind(this)} >
+     <Table onRowSelection={this.handleRowSelection}  >
         <TableHeader>
           <TableRow>
             <TableHeaderColumn>Name</TableHeaderColumn>
@@ -99,7 +91,7 @@ export default class Datasets extends Component {
           </TableRow>
         </TableHeader>
         <TableBody>
-          { hasUserData.map((project, index) =>
+          { selectedDataset().map((project, index) =>
               project.files.map((file, index2) =>
             <TableRow>
             <TableRowColumn>{file.name}</TableRowColumn>
@@ -113,7 +105,7 @@ export default class Datasets extends Component {
         </TableBody>
       </Table>
    </div>
-   {showDatasetInfo.call(this)}
+
  </div>
    )
  }
