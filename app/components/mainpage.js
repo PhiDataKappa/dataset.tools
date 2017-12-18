@@ -94,7 +94,7 @@ export default class MainPage extends Component {
           <div className="Container" style={{display: 'flex', 'top': '62px', height: '100%' }}>
             <div className="Sidebar" style={{flexShrink: 0, 'backgroundColor': 'black'}}>
               <List >
-                <ListItem primaryText="Projets" onClick={() => switchView('Projects')} />
+                <ListItem primaryText="Projects" onClick={() => switchView('Projects')} />
                 <ListItem primaryText="Datasets" onClick={() => switchView('Datasets')}/>
                 <ListItem primaryText="Upload Dataset" />
               </List>
