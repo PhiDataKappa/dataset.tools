@@ -24,6 +24,10 @@ export default class Datasets extends Component {
    this.props.setSelectedDataset(null);
  }
 
+ componentWillUnmount() {
+   
+ }
+
  showDatasetInfo(row, column, event) {
    console.log('clicked');
    console.log('this')
@@ -59,31 +63,32 @@ export default class Datasets extends Component {
      // path.pop()
      var path = storage + '/' + name;
      console.log('path:', path)
-     fs.writeFileSync(path ,fileContent,(err) => {
+     fs.writeFileSync(path, response.data, "utf8", (err) => {
        if (err) throw err;
        console.log("The file was succesfully saved!");
-   });
-
-
-
-
-     // fs.writeFile(filepath, fileContent, (err) => {
-     //     if (err) throw err;
-     //
-     //     console.log("The file was succesfully saved!");
-     // });
-     //-------Added---------------
+     });
    })
  }
 
  render() {
+   var that = this
    var hasUserData = Array.isArray(this.props.userData) ? this.props.userData : [];
    var tableStyles = {
      height: '500px',
      overflowY: 'auto'
    }
    var clicked = () => {console.log('clicked')}
-   var showDatasetInfo = function () {
+
+   var selectedDataset = function () {
+      if (that.props.selectedProject === null) {
+       console.log('running 1')
+       return hasUserData;
+     } else {
+       console.log('running 2')
+       return [hasUserData[that.props.selectedProject]]
+     }
+   }
+   /*var showDatasetInfo = function () {
      var curDataset = this.props.selectedDataset  || false;
      if (curDataset){
        return <div><p>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</p></div>;
@@ -92,11 +97,14 @@ export default class Datasets extends Component {
      }
      //return <div><p>??????????????????????????????????????????????????????????????????</p></div>
    }
+      {thisshowDatasetInfo.call(this)}
+
+   */
    //onCellClick={console.log(rowNumber, columnID, 'clicked')}
    return (
      <div>
      <div className='datasetTable' style={tableStyles}>
-     <Table onRowSelection={this.handleRowSelection} onCellClick={this.showDatasetInfo.bind(this)} >
+     <Table onRowSelection={this.handleRowSelection}  >
         <TableHeader>
           <TableRow>
             <TableHeaderColumn>Name</TableHeaderColumn>
@@ -106,7 +114,7 @@ export default class Datasets extends Component {
           </TableRow>
         </TableHeader>
         <TableBody>
-          { hasUserData.map((project, index) =>
+          { selectedDataset().map((project, index) =>
               project.files.map((file, index2) =>
             <TableRow>
             <TableRowColumn>{file.name}</TableRowColumn>
@@ -120,7 +128,7 @@ export default class Datasets extends Component {
         </TableBody>
       </Table>
    </div>
-   {showDatasetInfo.call(this)}
+
  </div>
    )
  }

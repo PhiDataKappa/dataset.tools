@@ -8,6 +8,8 @@ import mainViewReducer from './Mainpage';
 import addUserDataReducer from './MainPage2';
 import shouldRedirectReducer from './homepage2.js';
 import setSelectedDatasetsReducer from './Datasets';
+import setSelectedProjectReducer from './Projects';
+
 
 const rootReducer = combineReducers({
   counter,
@@ -16,7 +18,8 @@ const rootReducer = combineReducers({
   token: tokenReducer,
   userData: addUserDataReducer,
   shouldRedirect: shouldRedirectReducer,
-  selectedDataset: setSelectedDatasetsReducer
+  selectedDataset: setSelectedDatasetsReducer,
+  selectedProject: setSelectedProjectReducer
 });
 
 export default rootReducer;
