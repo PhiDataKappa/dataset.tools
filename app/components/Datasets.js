@@ -37,35 +37,16 @@ export default class Datasets extends Component {
  getFile(owner, id, name, token) {
    console.log('getting file' + name);
    axios.get('http://localhost:8080/downloadDatasets', {params: {owner: owner, projectID: id, file: name, at: token}})
-   .then((data) => {
-     console.log('this is data in getFile', data);
-     //this.props.actions.mainPageActions.addUserData(data.data.records);
-     //-------Added---------------
-     // Change the content of the file as you want
-     // or either set fileContent to null to create an empty file
-     var fileContent = JSON.stringify(data);
-
-     // The absolute path of the new file with its name
-     var filepath = "mynewfile.csv";
+   .then((response) => {
+     console.log('this is data in getFile', response);
      var path = (String(process.cwd()).split('/'));
-     console.log('path after split',path)
      path.pop()
-      var path = (String(path.join('/') + `/${name}`))
+     var path = (String(path.join('/') + `/${name}`))
      console.log('path',path)
-     fs.writeFileSync(path ,fileContent,(err) => {
+     fs.writeFileSync(path, response.data, "utf8", (err) => {
        if (err) throw err;
        console.log("The file was succesfully saved!");
-   });
-
-
-
-
-     // fs.writeFile(filepath, fileContent, (err) => {
-     //     if (err) throw err;
-     //
-     //     console.log("The file was succesfully saved!");
-     // });
-     //-------Added---------------
+     });
    })
  }
 
