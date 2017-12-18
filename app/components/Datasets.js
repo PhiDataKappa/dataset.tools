@@ -9,6 +9,8 @@ import {
 } from 'material-ui/Table';
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
+var fs = require('fs');
+var storage = '../datasets';
 
 export default class Datasets extends Component {
   constructor(props){
@@ -42,11 +44,24 @@ export default class Datasets extends Component {
    console.log('getting file' + name);
    axios.get('http://localhost:8080/downloadDatasets', {params: {owner: owner, projectID: id, file: name, at: token}})
    .then((response) => {
-     console.log('this is data in getFile', response);
-     var path = (String(process.cwd()).split('/'));
-     path.pop()
-     var path = (String(path.join('/') + `/${name}`))
-     console.log('path',path)
+     //this.props.actions.mainPageActions.addUserData(data.data.records);
+     //-------Added---------------
+     // Change the content of the file as you want
+     // or either set fileContent to null to create an empty file
+//      var fileContent = JSON.stringify(data);
+
+     //create new folder if not existent
+     if (!fs.existsSync(storage)){
+       fs.mkdirSync(storage);
+     }
+
+     // The absolute path of the new file with its name
+     var filepath = "mynewfile.csv";
+     // var path = (String(process.cwd()).split('/'));
+     // console.log('path after split',path)
+     // path.pop()
+     var path = storage + '/' + name;
+     console.log('path:', path)
      fs.writeFileSync(path, response.data, "utf8", (err) => {
        if (err) throw err;
        console.log("The file was succesfully saved!");
