@@ -1,5 +1,5 @@
 .mainContainer {
-  display: flex
+    display: flex
 }
 
 .mainContent {
@@ -9,3 +9,12 @@
 .sidebar {
   flex: 5
 }
+
+body{
+ height:100%
+}
+/*
+#root div{
+height:100%
+}
+*/
