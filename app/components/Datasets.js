@@ -43,13 +43,12 @@ export default class Datasets extends Component {
  getFile(owner, id, name, token) {
    console.log('getting file' + name);
    axios.get('http://localhost:8080/downloadDatasets', {params: {owner: owner, projectID: id, file: name, at: token}})
-   .then((data) => {
-     console.log('this is data in getFile', data);
+   .then((response) => {
      //this.props.actions.mainPageActions.addUserData(data.data.records);
      //-------Added---------------
      // Change the content of the file as you want
      // or either set fileContent to null to create an empty file
-     var fileContent = JSON.stringify(data);
+//      var fileContent = JSON.stringify(data);
 
      //create new folder if not existent
      if (!fs.existsSync(storage)){
