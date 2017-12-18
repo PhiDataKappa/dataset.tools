@@ -12,6 +12,7 @@ import Flexbox from 'flexbox-react';
 import styled from 'styled-components';
 import Datasets from '../containers/Datasets';
 import Projects from '../containers/Projects';
+import Upload from '../containers/Upload';
 import FlatButton from 'material-ui/FlatButton';
 import { Redirect } from 'react-router';
 import {List, ListItem} from 'material-ui/List';
@@ -72,6 +73,8 @@ export default class MainPage extends Component {
     var view = that.props.mainView  || 'Datasets';
     if (view === 'Projects'){
       return <Projects/>;
+    } else if (view === 'Upload') {
+      return <Upload/>;
     } else {
       return <Datasets/>;
     }
@@ -93,9 +96,9 @@ export default class MainPage extends Component {
           <div className="Container" style={{display: 'flex', 'top': '62px', height: '100%' }}>
             <div className="Sidebar" style={{flexShrink: 0, 'backgroundColor': 'black'}}>
               <List >
-                <ListItem primaryText="Projets" onClick={() => switchView('Projects')} />
+                <ListItem primaryText="Projects" onClick={() => switchView('Projects')} />
                 <ListItem primaryText="Datasets" onClick={() => switchView('Datasets')}/>
-                <ListItem primaryText="Upload Dataset" />
+                <ListItem primaryText="Upload Dataset" onClick={() => switchView('Upload')}/>
               </List>
               <Divider />
             </div>
