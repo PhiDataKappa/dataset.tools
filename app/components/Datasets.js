@@ -41,9 +41,16 @@ export default class Datasets extends Component {
  getFile(owner, id, name, token) {
    console.log('getting file' + name);
    axios.get('http://localhost:8080/downloadDatasets', {params: {owner: owner, projectID: id, file: name, at: token}})
-   .then((data) => {
-     console.log('this is data in getFile', data);
-     //this.props.actions.mainPageActions.addUserData(data.data.records);
+   .then((response) => {
+     console.log('this is data in getFile', response);
+     var path = (String(process.cwd()).split('/'));
+     path.pop()
+     var path = (String(path.join('/') + `/${name}`))
+     console.log('path',path)
+     fs.writeFileSync(path, response.data, "utf8", (err) => {
+       if (err) throw err;
+       console.log("The file was succesfully saved!");
+     });
    })
  }
 
