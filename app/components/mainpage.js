@@ -70,7 +70,7 @@ export default class MainPage extends Component {
   //      <p>{JSON.stringify(this.state.projects)}</p>
 
   var MainView = function (view) {
-    var view = that.props.mainView  || 'Datasets';
+    var view = that.props.mainView  || 'Projects';
     if (view === 'Projects'){
       return <Projects/>;
     } else {
@@ -88,7 +88,7 @@ export default class MainPage extends Component {
 </Drawer>
 */
     return (
-      <div className='firstDiv' style={{height: '100vh'}}> 
+      <div className='firstDiv' style={{height: '100vh'}}>
         <div className='2ndDiv' style={{height: '100vh'}}>
           <AppBar title="dataset.tools" showMenuIconButton={false}  style={positionTitle} iconElementRight={<FlatButton onClick={this.logout} label="Log Out" />} />
           <div className="Container" style={{display: 'flex', 'top': '62px', height: '100%' }}>
