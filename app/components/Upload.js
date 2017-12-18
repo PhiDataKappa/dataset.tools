@@ -17,6 +17,7 @@ export default class Upload extends Component {
         <br/>
         <TextField hintText="Description"></TextField>
         <br/>
+        <br/>
         <button label="Upload" className="uploadButton btn btnGroup">Upload</button>
       </div>
     )

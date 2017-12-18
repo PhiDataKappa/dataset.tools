@@ -10,6 +10,8 @@ import {
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
 var fs = require('fs');
+var storage = '../datasets';
+
 export default class Datasets extends Component {
   constructor(props){
     super(props);
@@ -45,14 +47,20 @@ export default class Datasets extends Component {
      // or either set fileContent to null to create an empty file
      var fileContent = JSON.stringify(data);
 
+     //create new folder if not existent
+     if (!fs.existsSync(storage)){
+       fs.mkdirSync(storage);
+     }
+
      // The absolute path of the new file with its name
      var filepath = "mynewfile.csv";
-     var path = (String(process.cwd()).split('/'));
-     console.log('path after split',path)
-     path.pop()
-      var path = (String(path.join('/') + `/${name}`))
-     console.log('path',path)
-     fs.writeFileSync(path ,fileContent,(err) => {
+     // var path = (String(process.cwd()).split('/'));
+     // console.log('path after split',path)
+     // path.pop()
+     //  var path = (String(path.join('/') + `/${name}`))
+     // console.log('path',path)
+     var path = storage + '/' + name;
+     fs.writeFileSync(storage ,fileContent,(err) => {
        if (err) throw err;
        console.log("The file was succesfully saved!");
    });
