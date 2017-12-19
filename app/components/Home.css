@@ -4,8 +4,8 @@
   left: 10px;*/
   text-align: center;
   align-content: stretch;
-  background-image: url("../../Resources/dw.logo_greyscale.svg");
-  background-size: 100%;
+  /* background-image: url("../../Resources/dw.logo_greyscale.svg"); */
+  background-size: 75vh;
 }
 
 .container h2 {
@@ -14,4 +14,8 @@
 
 .container a {
   font-size: 1.4rem;
+}
+
+#signinbutton{
+
 }
