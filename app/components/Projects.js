@@ -50,7 +50,6 @@ export default class Projects extends Component {
 
         </TableBody>
       </Table>
-     <p>Hi im in projects</p>
    </div>
    )
  }
