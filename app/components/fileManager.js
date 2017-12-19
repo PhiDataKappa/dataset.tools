@@ -1,8 +1,9 @@
 const shell = require('electron').shell
 const os = require('os')
 
-//location of the client's download folder
-const localFolderPath = 'enter/fullPath';
+
+//location of the client's download folder.
+const localFolderPath = app.getPath(downloads);
 
 //NOTE: for added feature: "Show in Finder" btn next to datasets which have been downloaded
 const showItemInFolder = shell.showItemInFolder(localFolderPath);
