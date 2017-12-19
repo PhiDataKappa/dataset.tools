@@ -85,7 +85,7 @@ app.get('/getUserDatasets', (req, res) => {
     if (error) {
       console.log(error);
     }
-    console.log(body);
+     console.log(body);
      console.log(body, 'body', response, 'response');
     res.send(body);
   })
@@ -125,7 +125,7 @@ app.get('/downloadDatasets', (req, res) => {
     }
 
     //FILE SIZE CAN BE HUGE, THINK BEFORE SENDING; USE WRITESTREAM?
-    //console.log(body);
+    // console.log(body);
     /////!!!!!!!
     res.send(body);
 
@@ -146,6 +146,12 @@ app.get('/getdata', (req,res) =>{
   console.log('In server /getdata');
   res.send('hi');
 });
+
+
+
+
+
+
 
 
 
