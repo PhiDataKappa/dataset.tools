@@ -68,37 +68,46 @@ export default class Datasets extends Component {
 //------------------------------------------------------------------------------------------------
  sendFile(owner,id,name,token){
    const csvFilePath='../../Desktop/datasets/additions.csv'
-   var data = [];
+   var formData = new FormData(data);
+   // var data;
+   // var data = [];
   // csv()
   // .fromFile(csvFilePath)
   // .on('json',(jsonObj)=>{
   //     // combine csv header row and csv line to a json object
   //     // jsonObj.a ==> 1 or 4
   //     console.log("jsonObj",jsonObj);
-  //     data.push(JSON.stringify(jsonObj));
+  //     // data.push(JSON.stringify(jsonObj));
+  //     // data = jsonObj;
   // })
   // .on('done',(error)=>{
-  //   data = data.join(',');
-  //     console.log('end')
-  //     // console.log("data",data)
+  //   // data = data.join(',');
+  //   formData.append(key,value);
+  //   console.log('end')
+  //   // console.log("data",data)
   // })
-//    var data = fs.readFile(`../../Desktop/datasets/additions.csv`, (err, data) => {
-//      console.log('in the callback of fs.readFile',data)
-// });
-   var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": `https://api.data.world/v0/uploads/${owner}/${id}/files/lookiehere.csv?expandArchive=false`,
-  "method": "PUT",
-  "headers": {
-    "authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50Ompvc2h1YXBhd2xpayIsImlzcyI6ImFnZW50Ompvc2h1YXBhd2xpazo6ZTVkZGFlNjYtNDU0ZS00NmY1LThmMGQtZmE4NDlmNTY0YmE4IiwiaWF0IjoxNTEyNDk1NjU3LCJyb2xlIjpbInVzZXJfYXBpX3JlYWQiLCJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX2FkbWluIl0sImdlbmVyYWwtcHVycG9zZSI6dHJ1ZX0.DHmCQbfwUuAOhaUrRSrwMxMQZh3fD0Oakh0NEB2d5Zpi2tas3IzIk1Jav3HZskQaOS5xuw5zQ8Hd-lpBVrMGgA"
-  },
-  "data": "{}"
-}
+   fs.readFile(`../../Desktop/datasets/additions.csv`, "utf8", (err, data) => {
+     console.log('in the callback of fs.readFile',data)
 
-$.ajax(settings).done(function (response) {
-  console.log(response);
+     var settings = {
+       "async": true,
+       "crossDomain": true,
+       "url": "https://api.data.world/v0/uploads/joshuapawlik/test-csv/files/newdataset?expandArchive=false",
+       "method": "PUT",
+       "headers": {
+         "authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50Ompvc2h1YXBhd2xpayIsImlzcyI6ImFnZW50Ompvc2h1YXBhd2xpazo6ZTVkZGFlNjYtNDU0ZS00NmY1LThmMGQtZmE4NDlmNTY0YmE4IiwiaWF0IjoxNTEyNDk1NjU3LCJyb2xlIjpbInVzZXJfYXBpX3JlYWQiLCJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX2FkbWluIl0sImdlbmVyYWwtcHVycG9zZSI6dHJ1ZX0.DHmCQbfwUuAOhaUrRSrwMxMQZh3fD0Oakh0NEB2d5Zpi2tas3IzIk1Jav3HZskQaOS5xuw5zQ8Hd-lpBVrMGgA"
+       },
+       processData: false,
+       contentType: false,
+       "data": formData
+     }
+
+     $.ajax(settings).done(function (response) {
+       console.log('response',response);
+     });
 });
+// console.log(data)
+
 
 
 
