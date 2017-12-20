@@ -16,7 +16,7 @@ export default class Home extends Component {
       fireRedirect:false
     }
   }
-  
+
   componentDidMount() {
     if (document.cookie && this.props.shouldRedirect){
       var cookie = document.cookie;
@@ -65,16 +65,19 @@ export default class Home extends Component {
         <div className={styles.container} data-tid="container">
           <h2>dataset.tools</h2>
           <br/>
+          <div style={{display:"flex", alignItems:"center",flexDirection:"column"}}>
+          <img style={{width:"40%", height:"40%"}} id="dwimg" src="../Resources/dw.logo_greyscale.svg"/>
           {/* <Link to="/mainpage">to MainPage</Link> */}
-          <RaisedButton label="Sign in With Data.World" href="http://localhost:8080/authorize" />
-          <br/>
-          <h4>OR</h4>
-          <h4>Place Access Token Here</h4>
+          <RaisedButton style={{width:"30%", height:"30%"}} label="Sign in With Data.World" href="http://localhost:8080/authorize" />
+        </div>
+          {/* <br/> */}
+          {/* <h4>OR</h4> */}
+          {/* <h4>Place Access Token Here</h4> */}
 
-          <TextField hintText="Access Token" id="submit" />
+          {/* <TextField hintText="Access Token" id="submit" /> */}
           {/* <input id="submit" placeholder="Access Token here"></input> */}
-          <RaisedButton onClick={this.redir.bind(this)} label="Submit" />
-          <h5>Account > Settings > Advanced</h5>
+          {/* <RaisedButton onClick={this.redir.bind(this)} label="Submit" /> */}
+          {/* <h5>Account > Settings > Advanced</h5> */}
           {this.state.fireRedirect && (
             <Redirect to ={'/mainpage'}/>
           )}
