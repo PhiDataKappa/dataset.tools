@@ -17,6 +17,7 @@ import FlatButton from 'material-ui/FlatButton';
 import { Redirect } from 'react-router';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
+// import BottomNavigationBar from './Footer';
 
 
 export default class MainPage extends Component {
@@ -87,11 +88,16 @@ export default class MainPage extends Component {
                 <ListItem primaryText="Datasets" onClick={() => switchView('Datasets')}/>
               </List>
               <Divider />
+              <h1> test </h1>
             </div>
+            <div> test2 </div>
             <div className='mainContent' style={{flexGrow: 1, flexShrink: 1}}>
               {MainView()}
             </div>
+            <div> test3 </div>
+
           </div>
+
       {this.state.logout && (
         <Redirect to ={'/'}/>
       )}
