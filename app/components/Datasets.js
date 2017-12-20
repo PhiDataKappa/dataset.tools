@@ -68,78 +68,28 @@ export default class Datasets extends Component {
 //------------------------------------------------------------------------------------------------
  sendFile(owner,id,name,token){
    const csvFilePath='../../Desktop/datasets/additions.csv'
-   var data = [];
-  // csv()
-  // .fromFile(csvFilePath)
-  // .on('json',(jsonObj)=>{
-  //     // combine csv header row and csv line to a json object
-  //     // jsonObj.a ==> 1 or 4
-  //     console.log("jsonObj",jsonObj);
-  //     data.push(JSON.stringify(jsonObj));
-  // })
-  // .on('done',(error)=>{
-  //   data = data.join(',');
-  //     console.log('end')
-  //     // console.log("data",data)
-  // })
-//    var data = fs.readFile(`../../Desktop/datasets/additions.csv`, (err, data) => {
-//      console.log('in the callback of fs.readFile',data)
-// });
-   var settings = {
-  "async": true,
-  "crossDomain": true,
-  "url": `https://api.data.world/v0/uploads/${owner}/${id}/files/lookiehere.csv?expandArchive=false`,
-  "method": "PUT",
-  "headers": {
-    "authorization": "Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50Ompvc2h1YXBhd2xpayIsImlzcyI6ImFnZW50Ompvc2h1YXBhd2xpazo6ZTVkZGFlNjYtNDU0ZS00NmY1LThmMGQtZmE4NDlmNTY0YmE4IiwiaWF0IjoxNTEyNDk1NjU3LCJyb2xlIjpbInVzZXJfYXBpX3JlYWQiLCJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX2FkbWluIl0sImdlbmVyYWwtcHVycG9zZSI6dHJ1ZX0.DHmCQbfwUuAOhaUrRSrwMxMQZh3fD0Oakh0NEB2d5Zpi2tas3IzIk1Jav3HZskQaOS5xuw5zQ8Hd-lpBVrMGgA"
-  },
-  "data": "{}"
-}
 
-$.ajax(settings).done(function (response) {
-  console.log(response);
+   fs.readFile(`../../Desktop/datasets/additions.csv`, "utf8", (err, data) => {
+
+     var settings = {
+       "async": true,
+       "crossDomain": true,
+       "url": "https://api.data.world/v0/uploads/joshuapawlik/test-csv/files/newdataset?expandArchive=false",
+       "method": "PUT",
+       "headers": {
+         "authorization": "Bearer" + token
+       },
+       contentType: 'application/json',
+       "data": data
+     }
+
+     $.ajax(settings).done(function (response) {
+       console.log('response',response);
+     });
+     console.log(token)
+     // eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50Ompvc2h1YXBhd2xpayIsImlzcyI6ImFnZW50Ompvc2h1YXBhd2xpazo6ZTVkZGFlNjYtNDU0ZS00NmY1LThmMGQtZmE4NDlmNTY0YmE4IiwiaWF0IjoxNTEyNDk1NjU3LCJyb2xlIjpbInVzZXJfYXBpX3JlYWQiLCJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX2FkbWluIl0sImdlbmVyYWwtcHVycG9zZSI6dHJ1ZX0.DHmCQbfwUuAOhaUrRSrwMxMQZh3fD0Oakh0NEB2d5Zpi2tas3IzIk1Jav3HZskQaOS5xuw5zQ8Hd-lpBVrMGgA
 });
 
-
-
-
-//    console.log("eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50Ompvc2h1YXBhd2xpayIsImlzcyI6ImFnZW50Ompvc2h1YXBhd2xpazo6ZTVkZGFlNjYtNDU0ZS00NmY1LThmMGQtZmE4NDlmNTY0YmE4IiwiaWF0IjoxNTEyNDk1NjU3LCJyb2xlIjpbInVzZXJfYXBpX3JlYWQiLCJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX2FkbWluIl0sImdlbmVyYWwtcHVycG9zZSI6dHJ1ZX0.DHmCQbfwUuAOhaUrRSrwMxMQZh3fD0Oakh0NEB2d5Zpi2tas3IzIk1Jav3HZskQaOS5xuw5zQ8Hd-lpBVrMGgA" === token);
-//    console.log(token)
-//    var settings = {
-//   "async": true,
-//   "crossDomain": true,
-//   "url": `https://api.data.world/v0/datasets/${owner}/${id}`,
-//   "method": "PUT",
-//   "headers": {
-//     "authorization": "Bearer",
-//     "content-type": "application/json"
-//   },
-//   "processData": false,
-//   "data": "{\"title\":\"butisit\",\"description\":\"string (optional)\",\"visibility\":\"OPEN\",\"files\":[{\"name\":\""+ name + "\",\"source\":{\"url\":\"https://data.world/"+ owner+"/"+id+"\"}}]}"
-// }
-//
-// $.ajax(settings).done(function (response) {
-//   console.log(JSON.stringify(response));
-// });
-
-
-
-
-//    const header = {
-//      "authorization": "Bearer" + token,
-//      "content-type": "application/json"
-//    }
-//
-//    var settings = {
-//   "async": true,
-//   "crossDomain": true,
-//   "processData": false,
-//   "data": "{\"title\":\"string (optional)\",\"description\":\"string (optional)\",\"summary\":\"string (optional)\",\"tags\":[\"string\"],\"license\":\"string (optional)\",\"visibility\":\"string (required)\",\"files\":[{\"name\":\"showmesomething.csv\",\"source\":{\"url\":\"\",\"expandArchive\":\"boolean (optional)\"},\"description\":\"string (optional)\",\"labels\":[\"string\"]}]}"
-// }
-   // console.log(owner,id,name,token);
-   // axios.put("https://api.data.world/v0/datasets/" + owner + id, body, headers ).then((response) =>{
-   //   console.log("response",response);
-   // })
  }
 //------------------------------------------------------------------------------------------------
 
