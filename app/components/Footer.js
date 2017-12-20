@@ -6,10 +6,10 @@ import IconLocationOn from 'material-ui/svg-icons/communication/location-on';
 import IconFolderOpen from 'material-ui/svg-icons/file/folder-open';
 import IconLanguage from 'material-ui/svg-icons/action/language';
 
-const recentsIcon = <IconLanguage />;
-const favoritesIcon = <IconFolderOpen />;
+const dataworldIcon = <IconLanguage />;
+const folderIcon = <IconFolderOpen />;
 // const nearybyIcon = <FontIcon className="material-icons"></FontIcon>;
-const nearbyIcon = <IconLocationOn />;
+const datasetToolsIcon = <IconLocationOn />;
 
 /**
  * A simple example of `BottomNavigation`, with three labels and icons
@@ -22,25 +22,27 @@ class BottomNavigationBar extends Component {
   };
 
   select = (index) => this.setState({selectedIndex: index});
+  open = () => require('electron').shell.showItemInFolder(require('os').homedir());
+  dataworld = () => require('electron').shell.openExternal('http://data.world')
 
   render() {
     return (
       <Paper zDepth={1}>
         <BottomNavigation selectedIndex={this.state.selectedIndex}>
           <BottomNavigationItem
-            label="data.world"
-            icon={recentsIcon}
+            label="dataset.tools"
+            icon={datasetToolsIcon}
             onClick={() => this.select(0)}
           />
           <BottomNavigationItem
             label="local folder"
-            icon={favoritesIcon}
-            onClick={() => this.select(1)}
+            icon={folderIcon}
+            onClick={() => this.open().select(1)}
           />
           <BottomNavigationItem
-            label="dataset.tools"
-            icon={nearbyIcon}
-            onClick={() => this.select(2)}
+            label="data.world"
+            icon={dataworldIcon}
+            onClick={() => this.dataworld().select(2)}
           />
         </BottomNavigation>
       </Paper>

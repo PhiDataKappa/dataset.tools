@@ -377,9 +377,9 @@ app.on('ready', () => {
   // Make the popup window for the menubar
   window = new BrowserWindow({
     width: 800,
-    height: 600,
+    height: 450,
     show: true,
-    frame: false,
+    frame: true,
     resizable: true,
   })
 
@@ -502,10 +502,10 @@ app.on('ready', async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
+    width: 800,
     minWidth: 340,
-    minHeight: 480,
-    height: 800,
+    minHeight: 400,
+    height: 450,
     // "use-content-size": true,
     resizable: true,
     center: true,
@@ -584,10 +584,10 @@ function createWindow () {
   // let mainWindow = new BrowserWindow({width: 1024,height: 738})
   let mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
+    width: 800,
     minWidth: 340,
-    minHeight: 480,
-    height: 800,
+    minHeight: 400,
+    height: 400,
     // "use-content-size": true,
     resizable: true,
     center: true,
