@@ -7,6 +7,7 @@ import './app.global.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import './ReactotronConfig';
 
 const store = configureStore();
 
