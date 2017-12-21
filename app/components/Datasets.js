@@ -64,7 +64,8 @@ export default class Datasets extends Component {
          let downloadNotification = new Notification('Dataset successfully downloaded!', {
            body: 'Open in you local folder to edit.'
          })
-         downloadNotification.onclick = () => { ipcRenderer.send('show-window') }
+         downloadNotification.onclick = () => { require('electron').shell.showItemInFolder(require('os').homedir()) }
+
          console.log("The file was succesfully saved locally*************!");
        }
      });

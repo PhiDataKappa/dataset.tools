@@ -17,7 +17,6 @@ import FlatButton from 'material-ui/FlatButton';
 import { Redirect } from 'react-router';
 import {List, ListItem} from 'material-ui/List';
 import Divider from 'material-ui/Divider';
-// import BottomNavigationBar from './Footer';
 
 
 export default class MainPage extends Component {
