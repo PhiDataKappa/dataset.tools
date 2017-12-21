@@ -1,10 +1,8 @@
-/*@import "~font-awesome/css/font-awesome.css";*/
 body {
   position: relative;
   color: white;
   height: 100vh;
   background-color: #6290c3;
-  /* background-image: linear-gradient(45deg, rgba(0, 216, 255, 0.5) 10%, rgba(0, 1, 127, 0.7)); */
   font-family: Arial, Helvetica, Helvetica Neue, serif;
   overflow-y: hidden;
   margin-left: 0px;
@@ -41,10 +39,6 @@ a:hover {
   display: flex;
   flex-direction: column;
   align-items: center;
-  /*position: relative;
-  width: 400px;
-  height: 200px;
-  border: 3px solid #73AD21;*/
 }
 
 .table {
@@ -63,22 +57,10 @@ a:hover {
   justify-content: center;
 }
 
-
 body {
   height:100vh
 }
 
 #root {
   height:100vh
-}
-
-.Home__container__1sK25{
-  /* height: 90vh;
-  background-repeat: no-repeat;
-  background-position: center bottom;
-  background-size: 50% 50%; */
-  /* height: 90vh;
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 60% 60%; */
 }

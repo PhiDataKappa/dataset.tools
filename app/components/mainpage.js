@@ -54,12 +54,9 @@ export default class MainPage extends Component {
 
   render() {
     var that = this;
-    //functions
-    // console.log(this.props)
-    // console.log(this.props.token);
 
     var forceNavDown = {'top': '72px'};
-    var positionTitle = {'top': '-8px', 'backgroundColor':grey400, 'height':'73px'};
+    var positionTitle = {'top': '-8px', 'backgroundColor': grey400, 'height':'73px'};
 
   var switchView = function (view) {
     console.log('view at first', view);
@@ -70,7 +67,6 @@ export default class MainPage extends Component {
     that.props.actions.mainPageActions.changeView(view);
 
   }
-  //      <p>{JSON.stringify(this.state.projects)}</p>
 
   var MainView = function (view) {
     var view = that.props.mainView  || 'Projects';
@@ -81,15 +77,6 @@ export default class MainPage extends Component {
     }
   }
 
-//  return <Projects/>
-//}
-/*
-<Drawer className='nav' open={true} containerStyle={forceNavDown}>
-  <MenuItem onClick={() => switchView('Projects')}>Projects</MenuItem>
-  <MenuItem onClick={() => switchView('Datasets')}>Datasets </MenuItem>
-  <MenuItem>Upload DataSet</MenuItem>
-</Drawer>
-*/
     return (
       <div style={{height: '100vh'}}>
           <AppBar title="dataset.tools" showMenuIconButton={false}  style={positionTitle} iconElementRight={<FlatButton onClick={this.logout} label="Log Out" />} />
