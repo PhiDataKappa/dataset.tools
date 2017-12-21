@@ -7,7 +7,6 @@ import axios from 'axios';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
 import {orange500, blue500} from 'material-ui/styles/colors';
-// import muiThemeable from 'material-ui/styles/muiThemeable';
 
 export default class Home extends Component {
   constructor(){
@@ -26,22 +25,16 @@ export default class Home extends Component {
       this.props.setShouldRedirect(true);
       this.setState({fireRedirect:true})
     }
-    //if token
-      //redirect to MainPage
-    //else
-      //chill
   }
 
   redir = () => {
     var at = document.getElementById('submit').value
-    // console.log('at',at);
     this.props.addAccessToken(at);
     this.setState({fireRedirect:true})
   }
 
 
   render() {
-    // <Link to="/counter">to Counter</Link>
     var getFiles = function(){
       axios.get('8080/getdata')
       .then((data) => {
@@ -53,39 +46,20 @@ export default class Home extends Component {
       console.log('in getFiles function')
     }
 
-    // const styles = {
-    //   hintStyle: {
-    //     color: ,
-    //   }
-    // };
-
-
     return (
       <div>
         <div className={styles.container} data-tid="container">
           <h2 style={{color: '#f7f7f7'}}>dataset.tools</h2>
           <br/>
-          <div style={{display:"flex", alignItems:"center",flexDirection:"column"}}>
+          <div style={{display:"flex", alignItems:"center", flexDirection:"column"}}>
           <img style={{width:"40%", height:"40%"}} id="dwimg" src="../Resources/dw.logo_greyscale.svg"/>
-          {/* <Link to="/mainpage">to MainPage</Link> */}
-          <RaisedButton style={{width:"30%", height:"30%"}} label="Sign in With Data.World" href="http://localhost:8080/authorize" />
+          <RaisedButton style={{width: "120px", height:"auto", padding: "10px", backgroundColor: "#4f5057"}}  backgroundColor="#4f5057" href="http://localhost:8080/authorize">Sign in with data.world</RaisedButton>
         </div>
-          {/* <br/> */}
-          {/* <h4>OR</h4> */}
-          {/* <h4>Place Access Token Here</h4> */}
-
-          {/* <TextField hintText="Access Token" id="submit" /> */}
-          {/* <input id="submit" placeholder="Access Token here"></input> */}
-          {/* <RaisedButton onClick={this.redir.bind(this)} label="Submit" /> */}
-          {/* <h5>Account > Settings > Advanced</h5> */}
           {this.state.fireRedirect && (
             <Redirect to ={'/mainpage'}/>
           )}
 
           <br/>
-
-           {/* <a  href="http://localhost:8080/authorize">Click here to sign in with data.world!!</a> */}
-          {/* <button onClick = {() => getFiles()}>Get files</button> */}
         </div>
       </div>
     );

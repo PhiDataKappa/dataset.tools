@@ -44,7 +44,6 @@ export default class Datasets extends Component {
      //-------Added---------------
      // Change the content of the file as you want
      // or either set fileContent to null to create an empty file
-//      var fileContent = JSON.stringify(data);
 
      //create new folder if not existent
      if (!fs.existsSync(storage)){
@@ -53,9 +52,6 @@ export default class Datasets extends Component {
 
      // The absolute path of the new file with its name
      var filepath = "mynewfile.csv";
-     // var path = (String(process.cwd()).split('/'));
-     // console.log('path after split',path)
-     // path.pop()
      var path = storage + '/' + name;
      console.log('path:', path)
      fs.writeFile(path, response.data, "utf8", (err) => {
@@ -113,19 +109,7 @@ export default class Datasets extends Component {
        return [hasUserData[that.props.selectedProject]]
      }
    }
-   /*var showDatasetInfo = function () {
-     var curDataset = this.props.selectedDataset  || false;
-     if (curDataset){
-       return <div><p>!!!!!!!!!!!!!!!!!!!!!!!!!!!!!</p></div>;
-     } else {
-       return <div><p>?????????????????????????????</p></div>;
-     }
-     //return <div><p>??????????????????????????????????????????????????????????????????</p></div>
-   }
-      {thisshowDatasetInfo.call(this)}
 
-   */
-   //onCellClick={console.log(rowNumber, columnID, 'clicked')}
    let openInFolder = (name) =>{
      require('electron').shell.showItemInFolder(`${storage}/${name}`);
    }
@@ -146,15 +130,6 @@ export default class Datasets extends Component {
         <TableBody>
           { selectedDataset().map((project, index) =>
               project.files.map((file, index2) =>
-// <<<<<<< Show/upload
-//             <TableRow>
-//             <TableRowColumn>{file.name}</TableRowColumn>
-//             <TableRowColumn>{project.title}</TableRowColumn>
-//             <TableRowColumn>{(file.sizeInBytes/1000)} kb</TableRowColumn>
-//             <TableRowColumn><RaisedButton onClick={() => this.getFile(project.owner, project.id, file.name, this.props.token)}>Download</RaisedButton></TableRowColumn>
-//             <TableRowColumn><RaisedButton onClick={() => this.sendFile(project.owner, project.id, file.name, this.props.token)}>Upload</RaisedButton></TableRowColumn>
-//             <TableRowColumn><RaisedButton onClick={() => openInFolder(file.name)}>Show in Finder</RaisedButton></TableRowColumn>
-// =======
             <TableRow className="row">
             <TableRowColumn style={{color: "black"}}>{file.name}</TableRowColumn>
             <TableRowColumn style={{color: "black"}}>{project.title}</TableRowColumn>
@@ -162,15 +137,12 @@ export default class Datasets extends Component {
             <TableRowColumn><RaisedButton backgroundColor="#5dc0de" onClick={() => this.getFile(project.owner, project.id, file.name, this.props.token)}>Download</RaisedButton></TableRowColumn>
             <TableRowColumn><RaisedButton backgroundColor="#5dc0de" className="uploadDownloadBtn" onClick={() => this.sendFile(project.owner, project.id, file.name, this.props.token)}>Upload</RaisedButton></TableRowColumn>
             <TableRowColumn><RaisedButton backgroundColor="#f7f7f7" onClick={() => openInFolder(file.name)}>Show</RaisedButton></TableRowColumn>
-// >>>>>>> master
           </TableRow>
             )
           )}
-
         </TableBody>
       </Table>
    </div>
-
  </div>
    )
  }
