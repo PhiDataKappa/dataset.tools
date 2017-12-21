@@ -1,13 +1,14 @@
 .mainContainer {
-    display: flex
+    display: flex;
 }
 
 .mainContent {
-  flex: 1
+  flex: 1;
 }
 
 .sidebar {
-  flex: 5
+  flex: 5;
+  margin-top: -10px;
 }
 
 body{

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import RaisedButton from 'material-ui/RaisedButton';
 import TextField from 'material-ui/TextField';
-import {orange500, blue500, grey700
+import {orange500, blue500, grey400
 } from 'material-ui/styles/colors';
 import AppBar from 'material-ui/AppBar';
 import Drawer from 'material-ui/Drawer';
@@ -59,7 +59,7 @@ export default class MainPage extends Component {
     // console.log(this.props.token);
 
     var forceNavDown = {'top': '72px'};
-    var positionTitle = {'top': '-8px', 'backgroundColor':grey700, 'height':'73px'};
+    var positionTitle = {'top': '-8px', 'backgroundColor':grey400, 'height':'73px'};
 
   var switchView = function (view) {
     console.log('view at first', view);
@@ -91,15 +91,13 @@ export default class MainPage extends Component {
 </Drawer>
 */
     return (
-      <div className='firstDiv' style={{height: '100vh'}}>
-        <div className='2ndDiv' style={{height: '100vh'}}>
+      <div style={{height: '100vh'}}>
           <AppBar title="dataset.tools" showMenuIconButton={false}  style={positionTitle} iconElementRight={<FlatButton onClick={this.logout} label="Log Out" />} />
           <div className="Container" style={{display: 'flex', 'top': '62px', height: '100%' }}>
-            <div className="Sidebar" style={{flexShrink: 0, 'backgroundColor': 'black'}}>
+            <div className="Sidebar" style={{flexShrink: 0, 'backgroundColor': '#333d49', width: '150px', marginTop:'-10px'}}>
               <List >
                 <ListItem primaryText="Projects" onClick={() => switchView('Projects')} />
                 <ListItem primaryText="Datasets" onClick={() => switchView('Datasets')}/>
-                <ListItem primaryText="Upload Dataset" />
               </List>
               <Divider />
             </div>
@@ -110,7 +108,6 @@ export default class MainPage extends Component {
       {this.state.logout && (
         <Redirect to ={'/'}/>
       )}
-    </div>
   </div>
     );
   }
