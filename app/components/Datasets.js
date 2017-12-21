@@ -4,8 +4,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
 import $ from 'jquery';
 import csv from 'csvtojson'
-var fs = require('fs');
-var storage = '../datasets';
+const fs = require('fs');
+const storage = '../datasets';
+const {ipcRenderer} = require('electron');
 //------------------------------------------------------------------------------------------------
 export default class Datasets extends Component {
   constructor(props){
@@ -56,8 +57,16 @@ export default class Datasets extends Component {
      console.log('path:', path)
      fs.writeFile(path, response.data, "utf8", (err) => {
        console.log("response",response);
-       if (err) throw err;
-       console.log("The file was succesfully saved!");
+       if (err) {
+         throw err;
+       } else {
+         // system notification confirming download action
+         let downloadNotification = new Notification('Dataset successfully downloaded!', {
+           body: 'Open in you local folder to edit.'
+         })
+         downloadNotification.onclick = () => { ipcRenderer.send('show-window') }
+         console.log("The file was succesfully saved locally*************!");
+       }
      });
    })
  }

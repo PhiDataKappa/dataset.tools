@@ -42,5 +42,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Tell the notification to show the menubar popup window on click
   n.onclick = () => { ipcRenderer.send('show-window') }
-
 })

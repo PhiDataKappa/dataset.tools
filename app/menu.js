@@ -45,13 +45,13 @@ export default class MenuBuilder {
 
   buildDarwinTemplate() {
     const subMenuAbout = {
-      label: 'Electron',
+      label: 'dataset.tools',
       submenu: [
-        { label: 'About ElectronReact', selector: 'orderFrontStandardAboutPanel:' },
+        { label: 'About dataset.tools', selector: 'orderFrontStandardAboutPanel:' },
         { type: 'separator' },
         { label: 'Services', submenu: [] },
         { type: 'separator' },
-        { label: 'Hide ElectronReact', accelerator: 'Command+H', selector: 'hide:' },
+        { label: 'Hide dataset.tools', accelerator: 'Command+H', selector: 'hide:' },
         { label: 'Hide Others', accelerator: 'Command+Shift+H', selector: 'hideOtherApplications:' },
         { label: 'Show All', selector: 'unhideAllApplications:' },
         { type: 'separator' },
@@ -96,8 +96,8 @@ export default class MenuBuilder {
     const subMenuHelp = {
       label: 'Help',
       submenu: [
-        { label: 'Learn More', click() { shell.openExternal('http://electron.atom.io'); } },
-        { label: 'Documentation', click() { shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme'); } },
+        { label: 'Learn More', click() { shell.openExternal('http://dataset.tools'); } },
+        { label: 'Developer Docs', click() { shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme'); } },
         { label: 'Community Discussions', click() { shell.openExternal('https://discuss.atom.io/c/electron'); } },
         { label: 'Search Issues', click() { shell.openExternal('https://github.com/atom/electron/issues'); } }
       ]
@@ -161,10 +161,10 @@ export default class MenuBuilder {
       submenu: [{
         label: 'Learn More',
         click() {
-          shell.openExternal('http://electron.atom.io');
+          shell.openExternal('http://dataset.tools');
         }
       }, {
-        label: 'Documentation',
+        label: 'Developer Docs',
         click() {
           shell.openExternal('https://github.com/atom/electron/tree/master/docs#readme');
         }

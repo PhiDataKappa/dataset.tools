@@ -1,22 +1,9 @@
 /* eslint global-require: 1, flowtype-errors/show-errors: 0 */
 
-/**
- * This module executes inside of electron's main process. You can start
- * electron renderer process from here and communicate with the other processes
- * through IPC.
- *
- * When running `npm run build` or `npm run build-main`, this file is compiled to
- * `./app/main.prod.js` using webpack. This gives us some performance wins.
- *
- * @flow
- */
-import path from 'path';
-import url from 'url';
 // import {app, crashReporter, BrowserWindow, Menu, Tray } from 'electron';
 // const window = require('electron-window');
 // import {app, BrowserWindow, Menu} from 'electron';
 // import { app, BrowserWindow } from 'electron';
-import MenuBuilder from './menu';
 // const path = require('path')
 // const electron = require('electron')
 // const ipc = electron.ipcMain
@@ -26,6 +13,8 @@ import MenuBuilder from './menu';
 // const crashReporter = electron.crashReporter
 // const BrowserWindow = electron.BrowserWindow
 
+import path from 'path';
+import url from 'url';
 const electron = require('electron')
 const app = electron.app
 const crashReporter = electron.crashReporter
@@ -33,10 +22,99 @@ const BrowserWindow = electron.BrowserWindow
 const Menu = electron.Menu
 const Tray = electron.Tray
 const ipcMain = electron.ipcMain
-var storage = '../../../datasets';
+import MenuBuilder from './menu';
 
+const assetsDir = path.join(__dirname, 'assets')
+
+let tray = undefined
+let window = undefined
+
+
+app.on('ready', () => {
+
+  tray = new Tray('Resources/dataset.tools_tray_icon_menuIsVisible.png')
+
+  // menubar icon click handler
+  tray.on('click', function(event) {
+    toggleWindow()
+    // Show devtools when command clicked
+    if (window.isVisible() && process.defaultApp && event.metaKey) {
+      window.openDevTools({mode: 'detach'})
+    }
+  })
+  // Make the popup window for the menubar
+  window = new BrowserWindow({
+    show: false,
+    width: 800,
+    height: 450,
+    minWidth: 540,
+    minHeight: 400,
+    // maxWidth: 1024,
+    // maxHeight: 500,
+    // "use-content-size": true,
+    resizable: true,
+    center: true,
+    frame: true
+  })
+  // Tell the popup window to load our index.html file
+  window.loadURL(`file://${path.join(__dirname, 'app.html')}`)
+
+  // show after initial load
+  window.webContents.once('did-finish-load', () => {
+    window.show();
+  });
+
+  window.once('ready-to-show', () => {
+    window.show()
+  })
+
+  // Only close the window on blur if dev tools isn't opened
+  window.on('blur', () => {
+    if(!window.webContents.isDevToolsOpened()) {
+      window.hide()
+    }
+  })
+})
+
+const toggleWindow = () => {
+  if (window.isVisible()) {
+    window.hide()
+  } else {
+    showWindow()
+  }
+}
+
+const showWindow = () => {
+  const trayPos = tray.getBounds()
+  const windowPos = window.getBounds()
+  let x, y = 0
+  if (process.platform == 'darwin') {
+    x = Math.round(trayPos.x + (trayPos.width / 2) - (windowPos.width / 2))
+    y = Math.round(trayPos.y + trayPos.height)
+  } else {
+    x = Math.round(trayPos.x + (trayPos.width / 2) - (windowPos.width / 2))
+    y = Math.round(trayPos.y + trayPos.height * 10)
+  }
+  window.setPosition(x, y, false)
+  window.show()
+  window.focus()
+}
+
+ipcMain.on('show-window', () => {
+  showWindow()
+})
+
+app.on('window-all-closed', () => {
+  // On macOS it is common for applications and their menu bar
+  // to stay active until the user quits explicitly with Cmd + Q
+  if (process.platform !== 'darwin') {
+    app.quit()
+  }
+})
+
+// set options for desktop app menubar
 let template = [{
-  label: 'dataset.tools',
+  label: 'Go',
   submenu: [{
     label: 'Open in browser',
     accelerator: 'Shift+CmdOrCtrl+T',
@@ -203,9 +281,9 @@ function findReopenMenuItem () {
 }
 
 if (process.platform === 'darwin') {
-  const name = electron.app.getName()
+  const name = 'dataset.tools'
   template.unshift({
-    label: name,
+    label: 'dataset.tools',
     submenu: [{
       label: `About ${name}`,
       role: 'about'
@@ -250,6 +328,7 @@ if (process.platform === 'darwin') {
   addUpdateMenuItems(template[0].submenu, 1)
 }
 
+// windows build
 if (process.platform === 'win32') {
   const helpMenu = template[template.length - 1].submenu
   addUpdateMenuItems(helpMenu, 0)
@@ -271,45 +350,18 @@ app.on('window-all-closed', function () {
 })
 
 
-
-
+// declare variables to id process environment
 const isDevelopment = (process.env.NODE_ENV === 'development');
 const isProduction = (process.env.NODE_ENV === 'production');
-
-
-
-let mainWindow = null;
-// let forceQuit = false;
-
-// var menubar = require('menubar')
-// var mb = menubar()
-// mb.on('ready', function ready () {
-//   console.log('app is ready')
-//   // your app code here
-// })
-//
-// let win
-
-// tray and menubar
-// function createWindow() {
-//    win = new BrowserWindow({width: 1000, height: 400})
-//    win.loadURL(url.format ({
-//       pathname: path.join(__dirname, 'app.html'),
-//       protocol: 'file:',
-//       slashes: true
-//    }))
-// }
-
-// app.on('ready', createWindow)
 
 if (isProduction) {
   const sourceMapSupport = require('source-map-support');
   sourceMapSupport.install();
 }
 
+// Dev tools
 if (isDevelopment || process.env.DEBUG_PROD === 'true') {
   require('electron-debug')();
-  // const path = require('path');
   const p = path.join(__dirname, '..', 'app', 'node_modules');
   require('module').globalPaths.push(p);
 }
@@ -330,107 +382,130 @@ const installExtensions = async () => {
   }
 };
 
-// crashReporter.start({
-//   productName: 'YourName',
-//   companyName: 'YourCompany',
-//   submitURL: 'https://data.tools/url-to-submit',
-//   uploadToServer: false
-// });
 
 
 
-/**
- * ========================= Add event listeners...
- */
 
-// app.on('window-all-closed', () => {
-//   // Respect the OSX convention of having the application in memory even
-//   // after all windows have been closed
-//   app.quit();
-// });
-// const {app, Menu, Tray} = require('electron')
+let mainWindow = null;
 
-const assetsDir = path.join(__dirname, 'assets')
+app.on('ready', async () => {
+  if (isDevelopment || process.env.DEBUG_PROD === 'true') {
+    await installExtensions();
+  }
 
-let tray = undefined
-let window = undefined
-
-// This method is called once Electron is ready to run our code
-// It is effectively the main method of our Electron app
-app.on('ready', () => {
-  // Setup the menubar with an icon
-  // let icon = nativeImage.createFromDataURL(base64Icon)
-  // tray = new Tray(icon)
-  tray = new Tray('Resources/dataset.tools_tray_icon_menuIsVisible.png')
-
-  // Add a click handler so that when the user clicks on the menubar icon, it shows
-  // our popup window
-  tray.on('click', function(event) {
-    toggleWindow()
-
-    // Show devtools when command clicked
-    if (window.isVisible() && process.defaultApp && event.metaKey) {
-      window.openDevTools({mode: 'detach'})
-    }
-  })
-
-  // Make the popup window for the menubar
-  window = new BrowserWindow({
+  mainWindow = new BrowserWindow({
+    show: false,
     width: 800,
     height: 450,
-    show: true,
-    frame: true,
+    minWidth: 540,
+    minHeight: 400,
+    // maxWidth: 1024,
+    // maxHeight: 500,
+    // "use-content-size": true,
     resizable: true,
-  })
-
-  // Tell the popup window to load our index.html file
-  window.loadURL(`file://${path.join(__dirname, 'app.html')}`)
-
-  // Only close the window on blur if dev tools isn't opened
-  window.on('blur', () => {
-    if(!window.webContents.isDevToolsOpened()) {
-      window.hide()
+    center: true,
+    frame: true,
+    skipTaskbar: false
+    });
+  // mainWindow.loadURL(`file://${__dirname}/app.html`);
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'app.html'),
+    protocol: 'file:',
+    slashes: true
+  }));
+  // show window once on first load
+  mainWindow.webContents.once('did-finish-load', () => {
+    mainWindow.show();
+  });
+  mainWindow.webContents.on('did-finish-load', () => {
+    if (!mainWindow) {
+      throw new Error('"mainWindow" is not defined');
     }
+    mainWindow.show();
+    mainWindow.focus();
+  });
+  // Open the DevTools
+  // if (isDevelopment || process.env.DEBUG_PROD === 'true') {
+  //   mainWindow.webContents.openDevTools();
+  // }
+  // Emitted when the window is closed.
+  mainWindow.on('closed', () => {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+    mainWindow = null
   })
-})
+});
 
-const toggleWindow = () => {
-  if (window.isVisible()) {
-    window.hide()
-  } else {
-    showWindow()
-  }
-}
-
-const showWindow = () => {
-  const trayPos = tray.getBounds()
-  const windowPos = window.getBounds()
-  let x, y = 0
-  if (process.platform == 'darwin') {
-    x = Math.round(trayPos.x + (trayPos.width / 2) - (windowPos.width / 2))
-    y = Math.round(trayPos.y + trayPos.height)
-  } else {
-    x = Math.round(trayPos.x + (trayPos.width / 2) - (windowPos.width / 2))
-    y = Math.round(trayPos.y + trayPos.height * 10)
-  }
-
-
-  window.setPosition(x, y, false)
-  window.show()
-  window.focus()
-}
-
-ipcMain.on('show-window', () => {
-  showWindow()
-})
-
-app.on('window-all-closed', () => {
-  // On macOS it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
-  if (process.platform !== 'darwin') {
-    app.quit()
+app.on('activate', () => {
+  // On macOS it's common to re-create a window in the app when the
+  // dock icon is clicked and there are no other windows open.
+  if (mainWindow === null) {
+    createWindow()
   }
 })
+
+
+
+
+
+// function createWindow () {
+  // Create the browser window.
+  // let mainWindow = new BrowserWindow({width: 1024,height: 738})
+  // let mainWindow = new BrowserWindow({
+  //   show: false,
+  //   width: 800,
+  //   minWidth: 340,
+  //   minHeight: 400,
+  //   height: 400,
+  //   // "use-content-size": true,
+  //   resizable: true,
+  //   center: true,
+  //    icon: __dirname + '../Resources/assets/dataset.tools_dock_color_bw.png',
+  //   frame: true
+  //   });
+
+  // and load the index.html of the app.
+  // mainWindow.loadURL(url.format({
+  //   pathname: path.join(__dirname, 'app.html'),
+  //   protocol: 'file:',
+  //   slashes: true
+  // }))
+
+  // Open the DevTools.
+  // mainWindow.webContents.openDevTools()
+
+  // Emitted when the window is closed.
+  // mainWindow.on('closed', () => {
+    // Dereference the window object, usually you would store windows
+    // in an array if your app supports multi windows, this is the time
+    // when you should delete the corresponding element.
+//     mainWindow = null
+//   })
+// }
+
+
+
+//
+// let uploadWin = null
+//
+// app.on('ready', () => {
+//   uploadWin = new BrowserWindow({width: 800, height: 600})
+//   uploadWin.loadURL(`file://${__dirname}/index.html`)
+//   uploadWin.webContents.on('did-finish-load', () => {
+//     uploadWin.webContents.send('ping', 'whoooooooh!')
+//   })
+// })
+
+
+
+
+
+
+
+
+
+
 
 // Tray Icon as Base64 so tutorial has less overhead
 // let base64Icon = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw
@@ -495,69 +570,77 @@ app.on('window-all-closed', () => {
 
 
 
-app.on('ready', async () => {
-  if (isDevelopment || process.env.DEBUG_PROD === 'true') {
-    await installExtensions();
-  }
 
-  mainWindow = new BrowserWindow({
-    show: false,
-    width: 800,
-    minWidth: 340,
-    minHeight: 400,
-    height: 450,
-    // "use-content-size": true,
-    resizable: true,
-    center: true,
-    frame: true
-    });
 
-  // mainWindow.loadURL(`file://${__dirname}/app.html`);
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'app.html'),
-    protocol: 'file:',
-    slashes: true
-  }));
+// let forceQuit = false;
 
-  // show window once on first load
-  mainWindow.webContents.once('did-finish-load', () => {
-    mainWindow.show();
-  });
+// var menubar = require('menubar')
+// var mb = menubar()
+// mb.on('ready', function ready () {
+//   console.log('app is ready')
+//   // your app code here
+// })
+//
+// let win
+
+// tray and menubar
+// function createWindow() {
+//    win = new BrowserWindow({width: 1000, height: 400})
+//    win.loadURL(url.format ({
+//       pathname: path.join(__dirname, 'app.html'),
+//       protocol: 'file:',
+//       slashes: true
+//    }))
+// }
+
+// app.on('ready', createWindow)
 
 
 
-  // @TODO: Use 'ready-to-show' event
-  //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
-  mainWindow.webContents.on('did-finish-load', () => {
-    // Handle window logic properly on macOS:
-    // 1. App should not terminate if window has been closed
-    // 2. Click on icon in dock should re-open the window
-    // 3. ⌘+Q should close the window and quit the app
-    if (!mainWindow) {
-      throw new Error('"mainWindow" is not defined');
-    }
-    mainWindow.show();
-    mainWindow.focus();
-  });
 
-  // if (process.platform === 'darwin') {
-  //   mainWindow.on('closed', () => {
-  //     mainWindow = null;
-  //   });
-  //
-  //   app.on('activate', () => {
-  //     mainWindow.show();
-  //     mainWindow.focus();
-  //   });
-  //
-  //   app.on('before-quit', () => {
-  //     forceQuit = true;
-  //   });
-  // } else {
-  //   mainWindow.on('closed', () => {
-  //     mainWindow = null;
-  //   });
-  // }
+
+
+// crashReporter.start({
+//   productName: 'YourName',
+//   companyName: 'YourCompany',
+//   submitURL: 'https://data.tools/url-to-submit',
+//   uploadToServer: false
+// });
+
+
+
+/**
+ * ========================= Add event listeners...
+ */
+
+// app.on('window-all-closed', () => {
+//   // Respect the OSX convention of having the application in memory even
+//   // after all windows have been closed
+//   app.quit();
+// });
+// const {app, Menu, Tray} = require('electron')
+
+
+
+
+// if (process.platform === 'darwin') {
+//   mainWindow.on('closed', () => {
+//     mainWindow = null;
+//   });
+//
+//   app.on('activate', () => {
+//     mainWindow.show();
+//     mainWindow.focus();
+//   });
+//
+//   app.on('before-quit', () => {
+//     forceQuit = true;
+//   });
+// } else {
+//   mainWindow.on('closed', () => {
+//     mainWindow = null;
+//   });
+// }
 //
 //   const menuBuilder = new MenuBuilder(mainWindow);
 //   menuBuilder.buildMenu();
@@ -577,58 +660,3 @@ app.on('ready', async () => {
 //       }]).popup(mainWindow);
 //     });
 //   }
-});
-
-function createWindow () {
-  // Create the browser window.
-  // let mainWindow = new BrowserWindow({width: 1024,height: 738})
-  let mainWindow = new BrowserWindow({
-    show: false,
-    width: 800,
-    minWidth: 340,
-    minHeight: 400,
-    height: 400,
-    // "use-content-size": true,
-    resizable: true,
-    center: true,
-     icon: __dirname + '../Resources/assets/dataset.tools_dock_color_bw.png',
-    frame: true
-    });
-
-  // and load the index.html of the app.
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'app.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
-
-  // Open the DevTools.
-  mainWindow.webContents.openDevTools()
-
-  // Emitted when the window is closed.
-  mainWindow.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-    mainWindow = null
-  })
-}
-
-app.on('activate', () => {
-  // On macOS it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) {
-    createWindow()
-  }
-})
-
-//
-// let uploadWin = null
-//
-// app.on('ready', () => {
-//   uploadWin = new BrowserWindow({width: 800, height: 600})
-//   uploadWin.loadURL(`file://${__dirname}/index.html`)
-//   uploadWin.webContents.on('did-finish-load', () => {
-//     uploadWin.webContents.send('ping', 'whoooooooh!')
-//   })
-// })
