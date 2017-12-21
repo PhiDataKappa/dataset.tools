@@ -33,7 +33,7 @@ const BrowserWindow = electron.BrowserWindow
 const Menu = electron.Menu
 const Tray = electron.Tray
 const ipcMain = electron.ipcMain
-
+var storage = '../../../datasets';
 
 let template = [{
   label: 'dataset.tools',
@@ -55,7 +55,7 @@ let template = [{
     label: 'Open local dataset folder',
     accelerator: 'Shift+CmdOrCtrl+O',
     click: function (event) {
-      require('electron').shell.showItemInFolder(require('os').homedir())
+      require('electron').shell.showItemInFolder(`${storage}`)
     }
   }]
 }, {

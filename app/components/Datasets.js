@@ -67,9 +67,8 @@ export default class Datasets extends Component {
  }
 //------------------------------------------------------------------------------------------------
  sendFile(owner,id,name,token){
-   const csvFilePath='../../Desktop/datasets/additions.csv'
-
-   fs.readFile(`../../Desktop/datasets/${name}`, "utf8", (err, data) => {
+ let filePath = `${storage}/${name}`
+   fs.readFile(`${storage}/${name}`, "utf8", (err, data) => {
      console.log('data from readFile',data);
 
      var settings = {
@@ -86,6 +85,10 @@ export default class Datasets extends Component {
 
      $.ajax(settings).done(function (response) {
        console.log('response',response);
+       fs.unlink(filePath,(err)=>{
+         if(err) alert('an error has occured');
+         else {console.log('executed');}
+       })
      });
 });
 
@@ -123,6 +126,9 @@ export default class Datasets extends Component {
 
    */
    //onCellClick={console.log(rowNumber, columnID, 'clicked')}
+   let openInFolder = (name) =>{
+     require('electron').shell.showItemInFolder(`${storage}/${name}`);
+   }
    return (
      <div>
      <div className='datasetTable' style={tableStyles}>
@@ -144,7 +150,7 @@ export default class Datasets extends Component {
             <TableRowColumn>{(file.sizeInBytes/1000)} kb</TableRowColumn>
             <TableRowColumn><RaisedButton onClick={() => this.getFile(project.owner, project.id, file.name, this.props.token)}>Download</RaisedButton></TableRowColumn>
             <TableRowColumn><RaisedButton onClick={() => this.sendFile(project.owner, project.id, file.name, this.props.token)}>Upload</RaisedButton></TableRowColumn>
-            <TableRowColumn><RaisedButton onClick={() => require('electron').shell.openExternal('file:///Users/hackreactoratx1/Desktop/dataset.tools/Resources')}>Show in Finder</RaisedButton></TableRowColumn>
+            <TableRowColumn><RaisedButton onClick={() => openInFolder(file.name)}>Show in Finder</RaisedButton></TableRowColumn>
           </TableRow>
             )
           )}
