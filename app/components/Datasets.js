@@ -133,7 +133,7 @@ export default class Datasets extends Component {
             <TableRow className="row">
             <TableRowColumn style={{color: "black"}}>{file.name}</TableRowColumn>
             <TableRowColumn style={{color: "black"}}>{project.title}</TableRowColumn>
-            <TableRowColumn style={{color: "black"}}>{(file.sizeInBytes/1000)} kb</TableRowColumn>
+            <TableRowColumn style={{color: "black"}}>{(file.sizeInBytes/1000 > 1000) ? (Math.floor(file.sizeInBytes/1000)/1000 + ' MB') : (Math.floor(file.sizeInBytes/10)/100 + ' KB')}</TableRowColumn>
             <TableRowColumn><RaisedButton backgroundColor="#5dc0de" onClick={() => this.getFile(project.owner, project.id, file.name, this.props.token)}>Download</RaisedButton></TableRowColumn>
             <TableRowColumn><RaisedButton backgroundColor="#5dc0de" className="uploadDownloadBtn" onClick={() => this.sendFile(project.owner, project.id, file.name, this.props.token)}>Upload</RaisedButton></TableRowColumn>
             <TableRowColumn><RaisedButton backgroundColor="#f7f7f7" onClick={() => openInFolder(file.name)}>Show</RaisedButton></TableRowColumn>
