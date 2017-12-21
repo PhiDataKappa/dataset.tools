@@ -69,15 +69,16 @@ export default class Datasets extends Component {
  sendFile(owner,id,name,token){
    const csvFilePath='../../Desktop/datasets/additions.csv'
 
-   fs.readFile(`../../Desktop/datasets/additions.csv`, "utf8", (err, data) => {
+   fs.readFile(`../../Desktop/datasets/${name}`, "utf8", (err, data) => {
+     console.log('data from readFile',data);
 
      var settings = {
        "async": true,
        "crossDomain": true,
-       "url": "https://api.data.world/v0/uploads/joshuapawlik/test-csv/files/newdataset?expandArchive=false",
+       "url": `https://api.data.world/v0/uploads/${owner}/${id}/files/${name}?expandArchive=false`,
        "method": "PUT",
        "headers": {
-         "authorization": "Bearer" + token
+         "authorization": `Bearer ${token}`
        },
        contentType: 'application/json',
        "data": data
@@ -86,8 +87,6 @@ export default class Datasets extends Component {
      $.ajax(settings).done(function (response) {
        console.log('response',response);
      });
-     console.log(token)
-     // eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwcm9kLXVzZXItY2xpZW50Ompvc2h1YXBhd2xpayIsImlzcyI6ImFnZW50Ompvc2h1YXBhd2xpazo6ZTVkZGFlNjYtNDU0ZS00NmY1LThmMGQtZmE4NDlmNTY0YmE4IiwiaWF0IjoxNTEyNDk1NjU3LCJyb2xlIjpbInVzZXJfYXBpX3JlYWQiLCJ1c2VyX2FwaV93cml0ZSIsInVzZXJfYXBpX2FkbWluIl0sImdlbmVyYWwtcHVycG9zZSI6dHJ1ZX0.DHmCQbfwUuAOhaUrRSrwMxMQZh3fD0Oakh0NEB2d5Zpi2tas3IzIk1Jav3HZskQaOS5xuw5zQ8Hd-lpBVrMGgA
 });
 
  }
