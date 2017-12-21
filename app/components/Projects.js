@@ -29,21 +29,21 @@ export default class Projects extends Component {
  render() {
    var hasUserData = Array.isArray(this.props.userData) ? this.props.userData : [];
    return (
-     <div className='projectTable'>
+     <div className='table'>
      <Table onRowSelection={this.handleRowSelection} onCellClick={this.selectProject.bind(this)}>
         <TableHeader>
-          <TableRow>
-            <TableHeaderColumn>Name</TableHeaderColumn>
-            <TableHeaderColumn>Number of Files</TableHeaderColumn>
-            <TableHeaderColumn>Show Datasets</TableHeaderColumn>
+          <TableRow className="row">
+            <TableHeaderColumn style={{color: "black", fontWeight:"bold"}}>Name</TableHeaderColumn>
+            <TableHeaderColumn style={{color: "black", fontWeight:"bold"}}>Number of Files</TableHeaderColumn>
+            <TableHeaderColumn style={{color: "black", fontWeight:"bold"}}>Show Datasets</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody>
           { hasUserData.map((project, index) =>
-            <TableRow>
-            <TableRowColumn>{project.title}</TableRowColumn>
-            <TableRowColumn>{(project.files.length)} Files</TableRowColumn>
-            <TableRowColumn><RaisedButton>Show</RaisedButton></TableRowColumn>
+            <TableRow className="row">
+            <TableRowColumn style={{color: "black"}}>{project.title}</TableRowColumn>
+            <TableRowColumn style={{color: "black"}}>{(project.files.length)} Files</TableRowColumn>
+            <TableRowColumn><RaisedButton backgroundColor="#5dc0de">Show</RaisedButton></TableRowColumn>
           </TableRow>
             )
           }

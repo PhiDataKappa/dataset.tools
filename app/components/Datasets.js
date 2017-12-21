@@ -126,28 +126,28 @@ export default class Datasets extends Component {
    //onCellClick={console.log(rowNumber, columnID, 'clicked')}
    return (
      <div>
-     <div className='datasetTable' style={tableStyles}>
+     <div className="table" style={tableStyles}>
      <Table onRowSelection={this.handleRowSelection}  >
         <TableHeader>
-          <TableRow>
-            <TableHeaderColumn>Name</TableHeaderColumn>
-            <TableHeaderColumn>Project</TableHeaderColumn>
-            <TableHeaderColumn>Size</TableHeaderColumn>
-            <TableHeaderColumn>Download</TableHeaderColumn>
-            <TableHeaderColumn>Upload</TableHeaderColumn>
-            <TableHeaderColumn>Show in Finder</TableHeaderColumn>
+          <TableRow className="row">
+            <TableHeaderColumn style={{color: "black", fontWeight:"bold"}}>Name</TableHeaderColumn>
+            <TableHeaderColumn style={{color: "black", fontWeight:"bold"}}>Project</TableHeaderColumn>
+            <TableHeaderColumn style={{color: "black", fontWeight:"bold"}}>Size</TableHeaderColumn>
+            <TableHeaderColumn style={{color: "black", fontWeight:"bold"}}>Download</TableHeaderColumn>
+            <TableHeaderColumn style={{color: "black", fontWeight:"bold"}}>Upload</TableHeaderColumn>
+            <TableHeaderColumn style={{color: "black", fontWeight:"bold"}}>Show in Finder</TableHeaderColumn>
           </TableRow>
         </TableHeader>
         <TableBody>
           { selectedDataset().map((project, index) =>
               project.files.map((file, index2) =>
-            <TableRow>
-            <TableRowColumn>{file.name}</TableRowColumn>
-            <TableRowColumn>{project.title}</TableRowColumn>
-            <TableRowColumn>{(file.sizeInBytes/1000)} kb</TableRowColumn>
-            <TableRowColumn><RaisedButton onClick={() => this.getFile(project.owner, project.id, file.name, this.props.token)}>Download</RaisedButton></TableRowColumn>
-            <TableRowColumn><RaisedButton onClick={() => this.sendFile(project.owner, project.id, file.name, this.props.token)}>Upload</RaisedButton></TableRowColumn>
-            <TableRowColumn><RaisedButton onClick={() => require('electron').shell.openExternal('file:///Users/hackreactoratx1/Desktop/dataset.tools/Resources')}>Show in Finder</RaisedButton></TableRowColumn>
+            <TableRow className="row">
+            <TableRowColumn style={{color: "black"}}>{file.name}</TableRowColumn>
+            <TableRowColumn style={{color: "black"}}>{project.title}</TableRowColumn>
+            <TableRowColumn style={{color: "black"}}>{(file.sizeInBytes/1000)} kb</TableRowColumn>
+            <TableRowColumn><RaisedButton backgroundColor="#5dc0de" onClick={() => this.getFile(project.owner, project.id, file.name, this.props.token)}>Download</RaisedButton></TableRowColumn>
+            <TableRowColumn><RaisedButton backgroundColor="#5dc0de" className="uploadDownloadBtn" onClick={() => this.sendFile(project.owner, project.id, file.name, this.props.token)}>Upload</RaisedButton></TableRowColumn>
+            <TableRowColumn><RaisedButton backgroundColor="#f7f7f7" onClick={() => require('electron').shell.openExternal('file:///Users/hackreactoratx1/Desktop/dataset.tools/Resources')}>Show</RaisedButton></TableRowColumn>
           </TableRow>
             )
           )}
