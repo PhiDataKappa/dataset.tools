@@ -12,6 +12,7 @@ var rp = require('request-promise');
 var cookieParser = require('cookie-parser');
 var fs = require('fs');
 
+
 app.use(bodyParser.urlencoded());
 app.use(bodyParser.json());
 app.use(cookieParser())
@@ -147,6 +148,9 @@ app.get('/getdata', (req,res) =>{
   res.send('hi');
 });
 
+app.get('/Resources/dw.logo_greyscale.svg', (req, res) => {
+  res.sendFile(path.join(__dirname, '../Resources/dw.logo_greyscale.svg'));
+})
 
 
 
