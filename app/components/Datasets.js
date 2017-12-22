@@ -101,7 +101,7 @@ export default class Datasets extends Component {
        let uploadNotification = new Notification('Successfully Uploaded!', {
            body: 'In sync with your data.world profile.'
        })
-       uploadNotification.onclick = () => { shell.openExternal('http://data.world') }
+       uploadNotification.onclick = () => { shell.openExternal(`http://data.world/${owner}/${id}`) }
        console.log("The file was succesfully uploaded**********")
 
        fs.unlink(filePath,(err)=>{
