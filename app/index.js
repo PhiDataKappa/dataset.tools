@@ -36,11 +36,11 @@ if (module.hot) {
 
 const {ipcRenderer} = require('electron')
 
-document.addEventListener('DOMContentLoaded', () => {
-  let n = new Notification('dataset.tools ready!', {
-    body: 'Tooling up.'
-  })
-
-  // Tell the notification to show the menubar popup window on click
-  n.onclick = () => { ipcRenderer.send('show-window') }
-})
+// document.addEventListener('DOMContentLoaded', () => {
+//   let n = new Notification('dataset.tools ready!', {
+//     body: 'Tooling up.'
+//   })
+//
+//   // Tell the notification to show the menubar popup window on click
+//   n.onclick = () => { ipcRenderer.send('show-window') }
+// })
