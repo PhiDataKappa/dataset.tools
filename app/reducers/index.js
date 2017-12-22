@@ -7,7 +7,7 @@ import tokenReducer from './homepage';
 import mainViewReducer from './Mainpage';
 import addUserDataReducer from './MainPage2';
 import shouldRedirectReducer from './homepage2.js';
-import setSelectedDatasetsReducer from './Datasets';
+import setDownloadedDatasetsReducer from './Datasets';
 import setSelectedProjectReducer from './Projects';
 
 
@@ -18,7 +18,7 @@ const rootReducer = combineReducers({
   token: tokenReducer,
   userData: addUserDataReducer,
   shouldRedirect: shouldRedirectReducer,
-  selectedDataset: setSelectedDatasetsReducer,
+  downloadedDatasets: setDownloadedDatasetsReducer,
   selectedProject: setSelectedProjectReducer
 });
 
