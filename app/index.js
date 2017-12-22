@@ -7,6 +7,7 @@ import './app.global.css';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import darkBaseTheme from 'material-ui/styles/baseThemes/darkBaseTheme';
+import './ReactotronConfig';
 
 const store = configureStore();
 
@@ -42,5 +43,4 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Tell the notification to show the menubar popup window on click
   n.onclick = () => { ipcRenderer.send('show-window') }
-
 })

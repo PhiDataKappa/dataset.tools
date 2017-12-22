@@ -4,8 +4,9 @@ import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
 import $ from 'jquery';
 import csv from 'csvtojson'
-var fs = require('fs');
-var storage = '../datasets';
+const fs = require('fs');
+const storage = '../datasets';
+const {ipcRenderer, shell} = require('electron');
 //------------------------------------------------------------------------------------------------
 export default class Datasets extends Component {
   constructor(props){
@@ -56,8 +57,17 @@ export default class Datasets extends Component {
      console.log('path:', path)
      fs.writeFile(path, response.data, "utf8", (err) => {
        console.log("response",response);
-       if (err) throw err;
-       console.log("The file was succesfully saved!");
+       if (err) {
+         throw err;
+       } else {
+         // system notification confirming download action
+         let downloadNotification = new Notification('Dataset successfully downloaded!', {
+           body: 'Open in you local folder to edit.'
+         })
+         downloadNotification.onclick = () => { shell.showItemInFolder(`${path}`) }
+
+         console.log("The file was succesfully saved locally*************!");
+       }
      });
    })
  }
@@ -81,6 +91,13 @@ export default class Datasets extends Component {
 
      $.ajax(settings).done(function (response) {
        console.log('response',response);
+       // system notification confirming upload action
+       let uploadNotification = new Notification('Successfully Uploaded!', {
+           body: 'In sync with your data.world profile.'
+       })
+       uploadNotification.onclick = () => { shell.openExternal('http://data.world') }
+       console.log("The file was succesfully uploaded**********")
+
        fs.unlink(filePath,(err)=>{
          if(err) alert('an error has occured');
          else {console.log('executed');}
@@ -133,7 +150,7 @@ export default class Datasets extends Component {
             <TableRow className="row">
             <TableRowColumn style={{color: "black"}}>{file.name}</TableRowColumn>
             <TableRowColumn style={{color: "black"}}>{project.title}</TableRowColumn>
-            <TableRowColumn style={{color: "black"}}>{(file.sizeInBytes/1000)} kb</TableRowColumn>
+            <TableRowColumn style={{color: "black"}}>{(file.sizeInBytes/1000 > 1000) ? (Math.floor(file.sizeInBytes/1000)/1000 + ' MB') : (Math.floor(file.sizeInBytes/10)/100 + ' KB')}</TableRowColumn>
             <TableRowColumn><RaisedButton backgroundColor="#5dc0de" onClick={() => this.getFile(project.owner, project.id, file.name, this.props.token)}>Download</RaisedButton></TableRowColumn>
             <TableRowColumn><RaisedButton backgroundColor="#5dc0de" className="uploadDownloadBtn" onClick={() => this.sendFile(project.owner, project.id, file.name, this.props.token)}>Upload</RaisedButton></TableRowColumn>
             <TableRowColumn><RaisedButton backgroundColor="#f7f7f7" onClick={() => openInFolder(file.name)}>Show</RaisedButton></TableRowColumn>
