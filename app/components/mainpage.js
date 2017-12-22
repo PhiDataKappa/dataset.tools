@@ -68,6 +68,19 @@ export default class MainPage extends Component {
 
   }
 
+  var getNewFiles = function () {
+    if (this.props.token) {
+      axios.get('http://localhost:8080/getUserDatasets', {params: {accessToken: this.props.token}})
+      .then((data) => {
+        console.log('this is data in componentDidMount', data);
+        this.props.actions.mainPageActions.addUserData(data.data.records);
+        console.log(data.data.records);
+        //this.setState({projects: data.data.records});
+
+      })
+    } else { console.log("Where's my token")}
+  }
+
   var MainView = function (view) {
     var view = that.props.mainView  || 'Projects';
     if (view === 'Projects'){
@@ -85,6 +98,7 @@ export default class MainPage extends Component {
               <List >
                 <ListItem primaryText="Projects" onClick={() => switchView('Projects')} />
                 <ListItem primaryText="Datasets" onClick={() => switchView('Datasets')}/>
+                <ListItem primaryText="Sync Files" onClick={() => getNewFiles()}/>
               </List>
               <Divider />
             </div>
