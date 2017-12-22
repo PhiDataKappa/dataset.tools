@@ -32,8 +32,8 @@
   },
   "browserslist": "electron 1.6",
   "build": {
-    "productName": "ElectronReact",
-    "appId": "org.develar.ElectronReact",
+    "productName": "dataset.tools",
+    "appId": "org.PhiDataKappa.dataset.tools",
     "files": [
       "dist/",
       "node_modules/",
@@ -142,6 +142,7 @@
     "electron": "^1.7.9",
     "electron-builder": "^19.49.0",
     "electron-devtools-installer": "^2.2.1",
+    "electron-packager": "^10.1.0",
     "enzyme": "^3.2.0",
     "enzyme-to-json": "^3.2.2",
     "eslint": "^4.13.1",
@@ -196,6 +197,7 @@
     "csvtojson": "^1.1.9",
     "devtron": "^1.4.0",
     "dotenv": "^4.0.0",
+    "electron": "^1.7.9",
     "electron-debug": "^1.4.0",
     "electron-window": "^0.8.1",
     "flexbox-react": "^4.4.0",
