@@ -153,7 +153,7 @@ if (this.props.downloadedDatasets.indexOf(name) > 0){
      <div>
      <div className="table" style={tableStyles}>
      <Table onRowSelection={this.handleRowSelection}  >
-        <TableHeader>
+        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow className="row">
             <TableHeaderColumn style={{color: "black", fontWeight:"bold"}}>Name</TableHeaderColumn>
             <TableHeaderColumn style={{color: "black", fontWeight:"bold"}}>Project</TableHeaderColumn>
@@ -163,7 +163,7 @@ if (this.props.downloadedDatasets.indexOf(name) > 0){
             <TableHeaderColumn style={{color: "black", fontWeight:"bold"}}>Show in Finder</TableHeaderColumn>
           </TableRow>
         </TableHeader>
-        <TableBody>
+        <TableBody displayRowCheckbox={false}>
           { selectedProject().map((project, index) =>
               project.files.map((file, index2) =>
             <TableRow className="row">

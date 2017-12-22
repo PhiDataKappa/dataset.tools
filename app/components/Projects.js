@@ -31,14 +31,14 @@ export default class Projects extends Component {
    return (
      <div className='table'>
      <Table onRowSelection={this.handleRowSelection} onCellClick={this.selectProject.bind(this)}>
-        <TableHeader>
+        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
           <TableRow className="row">
             <TableHeaderColumn style={{color: "black", fontWeight:"bold"}}>Name</TableHeaderColumn>
             <TableHeaderColumn style={{color: "black", fontWeight:"bold"}}>Number of Files</TableHeaderColumn>
             <TableHeaderColumn style={{color: "black", fontWeight:"bold"}}>Show Datasets</TableHeaderColumn>
           </TableRow>
         </TableHeader>
-        <TableBody>
+        <TableBody displayRowCheckbox={false}>
           { hasUserData.map((project, index) =>
             <TableRow className="row">
             <TableRowColumn style={{color: "black"}}>{project.title}</TableRowColumn>
