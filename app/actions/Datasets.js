@@ -1,6 +1,13 @@
-export function setSelectedDataset(dataset) {
+export function setDownloadedDatasets(id, name) {
   return {
-    type: 'SET_SELECTED_DATASETS',
-    text: dataset
+    type: 'SET_DOWNLOADED_DATASETS',
+    text: name
+  }
+}
+
+export function removeDownloadedDataset(index) {
+  return {
+    type: 'REMOVE_DOWNLOADED_DATASET',
+    index: index
   }
 }
