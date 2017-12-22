@@ -69,11 +69,11 @@ export default class MainPage extends Component {
   }
 
   var getNewFiles = function () {
-    if (this.props.token) {
-      axios.get('http://localhost:8080/getUserDatasets', {params: {accessToken: this.props.token}})
+    if (that.props.token) {
+      axios.get('http://localhost:8080/getUserDatasets', {params: {accessToken: that.props.token}})
       .then((data) => {
         console.log('this is data in componentDidMount', data);
-        this.props.actions.mainPageActions.addUserData(data.data.records);
+        that.props.actions.mainPageActions.addUserData(data.data.records);
         console.log(data.data.records);
         //this.setState({projects: data.data.records});
 
