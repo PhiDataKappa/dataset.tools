@@ -87,16 +87,11 @@ export default class MainPage extends Component {
                 <ListItem primaryText="Datasets" onClick={() => switchView('Datasets')}/>
               </List>
               <Divider />
-              <h1> test </h1>
             </div>
-            <div> test2 </div>
             <div className='mainContent' style={{flexGrow: 1, flexShrink: 1}}>
               {MainView()}
             </div>
-            <div> test3 </div>
-
           </div>
-
       {this.state.logout && (
         <Redirect to ={'/'}/>
       )}

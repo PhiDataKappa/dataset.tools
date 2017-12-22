@@ -5,7 +5,6 @@ import App from './containers/App';
 import HomePage from './containers/HomePage';
 import CounterPage from './containers/CounterPage';
 import MainPage from './containers/mainpage';
-import BottomNavigationBar from './components/Footer';
 // component that renders navigation and any mathcing routes inside a <App /> tag
   // <App> can be deconstructed into <header> and <main> if desired
 export default () => (
@@ -15,6 +14,5 @@ export default () => (
       <Route  exact path="/mainpage" component={MainPage} />
       <Route  path="/" component={HomePage} />
     </Switch>
-    <BottomNavigationBar />
   </App>
 );
