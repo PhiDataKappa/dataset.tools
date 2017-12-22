@@ -17,7 +17,7 @@ export default class Datasets extends Component {
 //------------------------------------------------------------------------------------------------
  componentDidMount() {
    console.log('mounting Datasets');
-   this.props.actions.DatasetsActions.setSelectedDataset(null);
+   //this.props.actions.DatasetsActions.setSelectedDataset(null);
  }
 //------------------------------------------------------------------------------------------------
  componentWillUnmount() {
@@ -39,6 +39,9 @@ export default class Datasets extends Component {
 //------------------------------------------------------------------------------------------------
  getFile(owner, id, name, token) {
    console.log('getting file' + name);
+   if (this.props.downloadedDatasets.indexOf(name) < 0){
+     this.props.actions.DatasetsActions.setDownloadedDatasets(id, name)
+   }
    axios.get('http://localhost:8080/downloadDatasets', {params: {owner: owner, projectID: id, file: name, at: token}})
    .then((response) => {
      //this.props.actions.mainPageActions.addUserData(data.data.records);
@@ -73,7 +76,10 @@ export default class Datasets extends Component {
  }
 //------------------------------------------------------------------------------------------------
  sendFile(owner,id,name,token){
+   console.log('index of upload', this.props.downloadedDatasets.indexOf(name))
+
  let filePath = `${storage}/${name}`
+
    fs.readFile(`${storage}/${name}`, "utf8", (err, data) => {
      console.log('data from readFile',data);
 
@@ -104,7 +110,9 @@ export default class Datasets extends Component {
        })
      });
 });
-
+if (this.props.downloadedDatasets.indexOf(name) > 0){
+  this.props.actions.DatasetsActions.removeDownloadedDataset(this.props.downloadedDatasets.indexOf(name))
+}
  }
 //------------------------------------------------------------------------------------------------
 
@@ -117,7 +125,7 @@ export default class Datasets extends Component {
    }
    var clicked = () => {console.log('clicked')}
 
-   var selectedDataset = function () {
+   var selectedProject = function () {
       if (that.props.selectedProject === null) {
        console.log('running 1')
        return hasUserData;
@@ -125,6 +133,17 @@ export default class Datasets extends Component {
        console.log('running 2')
        return [hasUserData[that.props.selectedProject]]
      }
+   }
+   var downloaded = function (file, project) {
+     if (that.props.downloadedDatasets.indexOf(file.name) < 1) {
+       return <RaisedButton backgroundColor="#5dc0de" onClick={() => that.getFile(project.owner, project.id, file.name, that.props.token)}>Download</RaisedButton>
+     } else {
+       return null;
+     }
+   }
+
+   var uploaded = function (file, project) {
+     return (that.props.downloadedDatasets.indexOf(file.name) > 0)
    }
 
    let openInFolder = (name) =>{
@@ -145,15 +164,15 @@ export default class Datasets extends Component {
           </TableRow>
         </TableHeader>
         <TableBody>
-          { selectedDataset().map((project, index) =>
+          { selectedProject().map((project, index) =>
               project.files.map((file, index2) =>
             <TableRow className="row">
             <TableRowColumn style={{color: "black"}}>{file.name}</TableRowColumn>
             <TableRowColumn style={{color: "black"}}>{project.title}</TableRowColumn>
             <TableRowColumn style={{color: "black"}}>{(file.sizeInBytes/1000 > 1000) ? (Math.floor(file.sizeInBytes/1000)/1000 + ' MB') : (Math.floor(file.sizeInBytes/10)/100 + ' KB')}</TableRowColumn>
-            <TableRowColumn><RaisedButton backgroundColor="#5dc0de" onClick={() => this.getFile(project.owner, project.id, file.name, this.props.token)}>Download</RaisedButton></TableRowColumn>
-            <TableRowColumn><RaisedButton backgroundColor="#5dc0de" className="uploadDownloadBtn" onClick={() => this.sendFile(project.owner, project.id, file.name, this.props.token)}>Upload</RaisedButton></TableRowColumn>
-            <TableRowColumn><RaisedButton backgroundColor="#f7f7f7" onClick={() => openInFolder(file.name)}>Show</RaisedButton></TableRowColumn>
+            <TableRowColumn>{downloaded(file, project)}</TableRowColumn>
+            <TableRowColumn>{uploaded(file, project) ? <RaisedButton backgroundColor="#5dc0de" className="uploadDownloadBtn" onClick={() => this.sendFile(project.owner, project.id, file.name, this.props.token, index, index2)}>Upload</RaisedButton> : null}</TableRowColumn>
+            <TableRowColumn>{uploaded(file, project) ? <RaisedButton backgroundColor="#f7f7f7" onClick={() => openInFolder(file.name)}>Show</RaisedButton> : null}</TableRowColumn>
           </TableRow>
             )
           )}
