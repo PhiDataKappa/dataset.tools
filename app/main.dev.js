@@ -55,6 +55,7 @@ app.on('ready', () => {
     resizable: true,
     center: true,
     frame: true
+    icon: path.join(__dirname, '../Resources/assets/icons/png/64x64.png')
   })
   // Tell the popup window to load our index.html file
   window.loadURL(`file://${path.join(__dirname, 'app.html')}`)
