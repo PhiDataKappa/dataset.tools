@@ -449,40 +449,30 @@ app.on('activate', () => {
 
 
 
-// function createWindow () {
-  // Create the browser window.
-  // let mainWindow = new BrowserWindow({width: 1024,height: 738})
-  // let mainWindow = new BrowserWindow({
-  //   show: false,
-  //   width: 800,
-  //   minWidth: 340,
-  //   minHeight: 400,
-  //   height: 400,
-  //   // "use-content-size": true,
-  //   resizable: true,
-  //   center: true,
-  //    icon: __dirname + '../Resources/assets/dataset.tools_dock_color_bw.png',
-  //   frame: true
-  //   });
+function createWindow () {
+  let mainWindow = new BrowserWindow({
+    show: true,
+    width: 800,
+    minWidth: 540,
+    minHeight: 400,
+    height: 800,
+    // "use-content-size": true,
+    resizable: true,
+    center: true,
+     icon: __dirname + '../Resources/assets/dataset.tools_dock_color_bw.png',
+    frame: true
+    });
 
-  // and load the index.html of the app.
-  // mainWindow.loadURL(url.format({
-  //   pathname: path.join(__dirname, 'app.html'),
-  //   protocol: 'file:',
-  //   slashes: true
-  // }))
+  mainWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'app.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
 
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools()
-
-  // Emitted when the window is closed.
-  // mainWindow.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
-//     mainWindow = null
-//   })
-// }
+  mainWindow.on('closed', () => {
+    mainWindow = null
+  })
+}
 
 
 
