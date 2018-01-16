@@ -77,15 +77,9 @@
     "url": "https://github.com/PhiDataKappa/dataset.tools"
   },
   "author": {
-<<<<<<< HEAD
     "name": "Ben Collins, Caleb Kress, Josh Pawlik, Noble Millie",
-
-    "url": "https://github.com/PhiDataKappa"
-=======
-    "name": "Ben Collins, Caleb Kress, Joshua Pawlik, Noble Millie",
-    "email": "",
     "url": "http://dataset.tools"
->>>>>>> 8335578f7f367cf295f0de0610e059b9038b6ce6
+
   },
   "license": "MIT",
   "bugs": {
