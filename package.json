@@ -2,7 +2,7 @@
   "name": "dataset.tools",
   "productName": "dataset.tools",
   "version": "1.0.0",
-  "description": "",
+  "description": "an open source data.world utility",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
@@ -78,13 +78,13 @@
     "url": "https://github.com/PhiDataKappa/dataset.tools"
   },
   "author": {
-    "name": "Ben Collins, Caleb Kress, Joshua Pawlik, Noble Millie",
-    "email": "",
+    "name": "Ben Collins, Caleb Kress, Josh Pawlik, Noble Millie",
     "url": "http://dataset.tools"
+
   },
   "license": "MIT",
   "bugs": {
-    "url": ""
+    "url": "https://github.com/PhiDataKappa/dataset.tools/issues"
   },
   "keywords": [
     "electron",

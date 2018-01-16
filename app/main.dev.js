@@ -37,6 +37,7 @@ app.on('ready', () => {
     resizable: true,
     center: true,
     frame: true
+    icon: path.join(__dirname, '../Resources/assets/icons/png/64x64.png')
   })
   window.loadURL(`file://${path.join(__dirname, 'app.html')}`)
 
