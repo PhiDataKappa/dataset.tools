@@ -77,9 +77,15 @@
     "url": "https://github.com/PhiDataKappa/dataset.tools"
   },
   "author": {
+<<<<<<< HEAD
     "name": "Ben Collins, Caleb Kress, Josh Pawlik, Noble Millie",
 
     "url": "https://github.com/PhiDataKappa"
+=======
+    "name": "Ben Collins, Caleb Kress, Joshua Pawlik, Noble Millie",
+    "email": "",
+    "url": "http://dataset.tools"
+>>>>>>> 8335578f7f367cf295f0de0610e059b9038b6ce6
   },
   "license": "MIT",
   "bugs": {
@@ -87,11 +93,9 @@
   },
   "keywords": [
     "electron",
-    "boilerplate",
     "react",
     "redux",
     "flow",
-    "sass",
     "webpack",
     "hot",
     "reload"
@@ -139,7 +143,7 @@
     "cross-spawn": "^5.1.0",
     "css-loader": "^0.28.7",
     "electron": "^1.7.9",
-    "electron-builder": "^19.49.0",
+    "electron-builder": "^19.53.6",
     "electron-devtools-installer": "^2.2.1",
     "electron-packager": "^10.1.0",
     "enzyme": "^3.2.0",
