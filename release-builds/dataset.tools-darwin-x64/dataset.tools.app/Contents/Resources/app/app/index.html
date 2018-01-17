@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>dataset.tools/index.html</title>
+    <script charset="utf-8">require('./index')</script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <h1>Menu (expected: second browserWindow)</h1>
+
+
+<!-- TODO: cross check main.dev.js -->
+  <!-- <script type = "text/javascript">
+   const {remote} = require('electron')
+   const {Tray, Menu} = remote
+   const path = require('path')
+
+   let trayIcon = new Tray(path.join('','Resources/dataset.tools_tray_icon_menuIsVisible.png'))
+
+   const trayMenuTemplate = [
+      {
+         label: 'Empty Application',
+         enabled: false
+      },
+
+      {
+         label: 'Settings',
+         click: function () {
+            console.log("Clicked on settings")
+         }
+      },
+
+      {
+         label: 'Help',
+         click: function () {
+            console.log("Clicked on Help")
+         }
+      }
+   ]
+
+   let trayMenu = Menu.buildFromTemplate(trayMenuTemplate)
+   trayIcon.setContextMenu(trayMenu)
+</script> -->
+  </body>
+</html>

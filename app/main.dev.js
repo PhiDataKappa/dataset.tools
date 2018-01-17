@@ -7,12 +7,45 @@ const BrowserWindow = electron.BrowserWindow
 const Menu = electron.Menu
 const Tray = electron.Tray
 const ipcMain = electron.ipcMain
-import MenuBuilder from './menu';
-
-const assetsDir = path.join(__dirname, 'assets')
+// import MenuBuilder from './menu';
+// const assetsDir = path.join(__dirname, 'assets')
 
 let tray = undefined
 let window = undefined
+let mainWindow = null;
+
+// declare variables to id process environment
+const isDevelopment = (process.env.NODE_ENV === 'development');
+const isProduction = (process.env.NODE_ENV === 'production');
+
+if (isProduction) {
+  const sourceMapSupport = require('source-map-support');
+  sourceMapSupport.install();
+}
+
+// Dev tools
+if (isDevelopment || process.env.DEBUG_PROD === 'true') {
+  require('electron-debug')();
+  const p = path.join(__dirname, '..', 'app', 'node_modules');
+  require('module').globalPaths.push(p);
+}
+
+const installExtensions = async () => {
+  const installer = require('electron-devtools-installer');
+  const extensions = [
+    'REACT_DEVELOPER_TOOLS',
+    'REDUX_DEVTOOLS'
+  ];
+  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
+  for (const name of extensions) {
+    try {
+      await installer.default(installer[name], forceDownload);
+    } catch (e) {
+      console.log(`Error installing ${name} extension: ${e.message}`);
+    }
+  }
+};
+
 
 app.on('ready', () => {
 
@@ -21,23 +54,20 @@ app.on('ready', () => {
   // menubar icon click handler
   tray.on('click', function(event) {
     toggleWindow()
-    if (window.isVisible() && process.defaultApp && event.metaKey) {
-      window.openDevTools({mode: 'detach'})
-    }
   })
+
+  tray.setToolTip('dataset.tools')
+
   window = new BrowserWindow({
     show: false,
     width: 800,
     height: 800,
     minWidth: 540,
     minHeight: 400,
-    // maxWidth: 1024,
-    // maxHeight: 500,
-    // "use-content-size": true,
     resizable: true,
     center: true,
-    frame: true
-    icon: path.join(__dirname, '../Resources/assets/icons/png/64x64.png')
+    frame: true,
+    icon: path.join(__dirname, 'Resources/dataset.tools_tray_icon_menuIsVisible.png')
   })
   window.loadURL(`file://${path.join(__dirname, 'app.html')}`)
 
@@ -47,16 +77,21 @@ app.on('ready', () => {
   });
 
   window.once('ready-to-show', () => {
-    window.show()
+    window.show();
   })
 
   window.on('blur', () => {
     if(!window.webContents.isDevToolsOpened()) {
-      window.hide()
+      window.hide();
     }
+  })
+
+  window.on('closed', function() {
+    window = null;
   })
 })
 
+//TODO: make the tray icon change off/on when toggled
 const toggleWindow = () => {
   if (window.isVisible()) {
     window.hide()
@@ -92,25 +127,25 @@ app.on('window-all-closed', () => {
 })
 
 // set options for desktop app menubar
-let template = [{
-  label: 'Go',
+let fileMenu = [{
+  label: 'Go to',
   submenu: [{
-    label: 'Open in browser',
-    accelerator: 'Shift+CmdOrCtrl+T',
+    label: 'dataset.tools',
+    accelerator: 'CmdOrCtrl+T',
     click: function (event) {
       require('electron').shell.openExternal('http://dataset.tools')
     }
   }, {
-    label: 'Open data.world',
-    accelerator: 'Shift+CmdOrCtrl+D',
+    label: 'data.world',
+    accelerator: 'CmdOrCtrl+D',
     click: function (event) {
       require('electron').shell.openExternal('http://data.world')
     }
   }, {
     type: 'separator'
   }, {
-    label: 'Open local dataset folder',
-    accelerator: 'Shift+CmdOrCtrl+O',
+    label: 'Your local dataset folder',
+    accelerator: 'CmdOrCtrl+O',
     click: function (event) {
       require('electron').shell.showItemInFolder(`${storage}`)
     }
@@ -261,7 +296,7 @@ function findReopenMenuItem () {
 
 if (process.platform === 'darwin') {
   const name = 'dataset.tools'
-  template.unshift({
+  fileMenu.unshift({
     label: 'dataset.tools',
     submenu: [{
       label: `About ${name}`,
@@ -297,24 +332,24 @@ if (process.platform === 'darwin') {
   })
 
   // Window menu.
-  template[3].submenu.push({
+  fileMenu[3].submenu.push({
     type: 'separator'
   }, {
     label: 'Bring All to Front',
     role: 'front'
   })
 
-  addUpdateMenuItems(template[0].submenu, 1)
+  addUpdateMenuItems(fileMenu[0].submenu, 1)
 }
 
 // windows build
 if (process.platform === 'win32') {
-  const helpMenu = template[template.length - 1].submenu
+  const helpMenu = fileMenu[fileMenu.length - 1].submenu
   addUpdateMenuItems(helpMenu, 0)
 }
 
 app.on('ready', function () {
-  const menu = Menu.buildFromTemplate(template)
+  const menu = Menu.buildFromTemplate(fileMenu)
   Menu.setApplicationMenu(menu)
 })
 
@@ -328,44 +363,6 @@ app.on('window-all-closed', function () {
   if (reopenMenuItem) reopenMenuItem.enabled = true
 })
 
-
-// declare variables to id process environment
-const isDevelopment = (process.env.NODE_ENV === 'development');
-const isProduction = (process.env.NODE_ENV === 'production');
-
-if (isProduction) {
-  const sourceMapSupport = require('source-map-support');
-  sourceMapSupport.install();
-}
-
-// Dev tools
-if (isDevelopment || process.env.DEBUG_PROD === 'true') {
-  require('electron-debug')();
-  const p = path.join(__dirname, '..', 'app', 'node_modules');
-  require('module').globalPaths.push(p);
-}
-
-const installExtensions = async () => {
-  const installer = require('electron-devtools-installer');
-  const extensions = [
-    'REACT_DEVELOPER_TOOLS',
-    'REDUX_DEVTOOLS'
-  ];
-  const forceDownload = !!process.env.UPGRADE_EXTENSIONS;
-  for (const name of extensions) {
-    try {
-      await installer.default(installer[name], forceDownload);
-    } catch (e) {
-      console.log(`Error installing ${name} extension: ${e.message}`);
-    }
-  }
-};
-
-
-
-
-
-let mainWindow = null;
 
 app.on('ready', async () => {
   if (isDevelopment || process.env.DEBUG_PROD === 'true') {
@@ -406,14 +403,10 @@ app.on('ready', async () => {
 });
 
 app.on('activate', () => {
-  if (mainWindow === null) {
-    createWindow()
+  if (window === null) {
+    createWindow();
   }
 })
-
-
-
-
 
 function createWindow () {
   let mainWindow = new BrowserWindow({
@@ -424,7 +417,7 @@ function createWindow () {
     height: 800,
     resizable: true,
     center: true,
-     icon: __dirname + '../Resources/assets/dataset.tools_dock_color_bw.png',
+    icon: path.join(__dirname + 'Resources/dataset.tools_tray_icon_menuIsVisible.png'),
     frame: true
     });
 

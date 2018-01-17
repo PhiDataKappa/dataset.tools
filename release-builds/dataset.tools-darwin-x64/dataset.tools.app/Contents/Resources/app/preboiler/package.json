@@ -1,0 +1,28 @@
+{
+  "name": "dataset.tools",
+  "version": "1.0.0",
+  "description": "Collect, clean and manage your data.world datasets.",
+  "main": "main.js",
+  "scripts": {
+    "start":"electron .",
+    "rebuild":"electron-rebuild -f -w sqlite3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PhiDataKappa/dataset.tools.git"
+  },
+  "author": "ghostcoder8, noblemillie, calebkress, joshawesome12",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PhiDataKappa/dataset.tools/issues"
+  },
+  "homepage": "https://github.com/PhiDataKappa/dataset.tools#readme",
+  "dependencies": {
+    "electron": "^1.7.9",
+    "knex": "^0.14.2",
+    "sqlite3": "^3.1.13"
+  },
+  "devDependencies": {
+    "electron-rebuild": "^1.6.0"
+  }
+}

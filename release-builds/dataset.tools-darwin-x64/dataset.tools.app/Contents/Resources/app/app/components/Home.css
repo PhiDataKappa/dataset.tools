@@ -1,0 +1,28 @@
+.container {
+  /*position: absolute;*/
+  /*top: 30%;
+  left: 10px;*/
+  text-align: center;
+  align-content: stretch;
+  /* background-image: url("../../Resources/dw.logo_greyscale.svg"); */
+  background-size: 75vh;
+}
+
+.container h2 {
+  font-size: 5rem;
+}
+
+.container a {
+  font-size: 1.4rem;
+}
+
+/* #signinbutton{
+  display: flex;
+} */
+/* #dwimg{
+  display: flex;
+} */
+
+/* #somediv{
+  flex-shrink: 2;
+} */

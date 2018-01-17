@@ -1,0 +1,25 @@
+.Container {
+  /*background-image: url("../../Resources/dw.logo_scuba.svg")*/
+}
+
+.mainContainer {
+    display: flex;
+}
+
+.mainContent {
+  flex: 1;
+}
+
+.sidebar {
+  flex: 5;
+  margin-top: -10px;
+}
+
+body{
+ height:100%
+}
+/*
+#root div{
+height:100%
+}
+*/
