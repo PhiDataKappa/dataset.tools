@@ -12,7 +12,6 @@ const ipcMain = electron.ipcMain
 
 let tray = undefined
 let window = undefined
-let mainWindow = null;
 
 // declare variables to id process environment
 const isDevelopment = (process.env.NODE_ENV === 'development');
@@ -46,8 +45,36 @@ const installExtensions = async () => {
   }
 };
 
+function createWindow () {
+  window = new BrowserWindow({
+    show: false,
+    width: 800,
+    minWidth: 540,
+    minHeight: 400,
+    height: 800,
+    resizable: true,
+    center: true,
+    icon: path.join(__dirname + 'Resources/assets/icons/png/64x64.png'),
+    frame: true
+    });
 
-app.on('ready', () => {
+  window.webContents.once('did-finish-load', () => {
+    window.show();
+  });
+
+  window.once('ready-to-show', () => {
+    window.show()
+  })
+
+  window.loadURL(url.format({
+    pathname: path.join(__dirname, 'app.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
+
+  window.on('closed', () => {
+    window = null
+  })
 
   tray = new Tray('Resources/dataset.tools_tray_icon_menuIsVisible.png')
 
@@ -58,38 +85,14 @@ app.on('ready', () => {
 
   tray.setToolTip('dataset.tools')
 
-  window = new BrowserWindow({
-    show: false,
-    width: 800,
-    height: 800,
-    minWidth: 540,
-    minHeight: 400,
-    resizable: true,
-    center: true,
-    frame: true,
-    icon: path.join(__dirname, 'Resources/dataset.tools_tray_icon_menuIsVisible.png')
-  })
-  window.loadURL(`file://${path.join(__dirname, 'app.html')}`)
+  const menu = Menu.buildFromTemplate(fileMenu)
 
-  // show after initial load
-  window.webContents.once('did-finish-load', () => {
-    window.show();
-  });
+  Menu.setApplicationMenu(menu)
+}
 
-  window.once('ready-to-show', () => {
-    window.show();
-  })
 
-  window.on('blur', () => {
-    if(!window.webContents.isDevToolsOpened()) {
-      window.hide();
-    }
-  })
+app.on('ready', createWindow);
 
-  window.on('closed', function() {
-    window = null;
-  })
-})
 
 //TODO: make the tray icon change off/on when toggled
 const toggleWindow = () => {
@@ -348,10 +351,6 @@ if (process.platform === 'win32') {
   addUpdateMenuItems(helpMenu, 0)
 }
 
-app.on('ready', function () {
-  const menu = Menu.buildFromTemplate(fileMenu)
-  Menu.setApplicationMenu(menu)
-})
 
 app.on('browser-window-created', function () {
   let reopenMenuItem = findReopenMenuItem()
@@ -363,75 +362,8 @@ app.on('window-all-closed', function () {
   if (reopenMenuItem) reopenMenuItem.enabled = true
 })
 
-
-app.on('ready', async () => {
-  if (isDevelopment || process.env.DEBUG_PROD === 'true') {
-    await installExtensions();
-  }
-
-  mainWindow = new BrowserWindow({
-    show: false,
-    width: 800,
-    height: 800,
-    minWidth: 540,
-    minHeight: 400,
-    resizable: true,
-    center: true,
-    frame: true,
-    skipTaskbar: false
-    });
-  // mainWindow.loadURL(`file://${__dirname}/app.html`);
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'app.html'),
-    protocol: 'file:',
-    slashes: true
-  }));
-  // show window once on first load
-  mainWindow.webContents.once('ready-to-show', () => {
-    mainWindow.show();
-  });
-  mainWindow.webContents.on('did-finish-load', () => {
-    if (!mainWindow) {
-      throw new Error('"mainWindow" is not defined');
-    }
-    mainWindow.show();
-    mainWindow.focus();
-  });
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
-});
-
-app.on('activate', () => {
-  if (window === null) {
+app.on('activate', function () {
+  if (!window) {
     createWindow();
   }
-})
-
-function createWindow () {
-  let mainWindow = new BrowserWindow({
-    show: false,
-    width: 800,
-    minWidth: 540,
-    minHeight: 400,
-    height: 800,
-    resizable: true,
-    center: true,
-    icon: path.join(__dirname + 'Resources/dataset.tools_tray_icon_menuIsVisible.png'),
-    frame: true
-    });
-
-  mainWindow.once('ready-to-show', () => {
-    mainWindow.show()
-  })
-
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'app.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
-
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
-}
+});

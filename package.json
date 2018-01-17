@@ -3,6 +3,7 @@
   "productName": "dataset.tools",
   "version": "1.0.0",
   "description": "an open source data.world utility",
+  "main": "./app/main.prod.js",
   "scripts": {
     "build": "concurrently \"npm run build-main\" \"npm run build-renderer\"",
     "build-dll": "cross-env NODE_ENV=development node --trace-warnings -r babel-register ./node_modules/webpack/bin/webpack --config webpack.config.renderer.dev.dll.js --colors",
