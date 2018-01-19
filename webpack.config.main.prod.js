@@ -34,7 +34,7 @@ export default merge.smart(baseConfig, {
       sourceMap: true
     }),
 
-    new BabiliPlugin(),
+    // new BabiliPlugin(),
 
     new BundleAnalyzerPlugin({
       analyzerMode: process.env.OPEN_ANALYZER === 'true' ? 'server' : 'disabled',

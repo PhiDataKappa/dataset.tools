@@ -3,7 +3,6 @@ import {Table,TableBody,TableHeader,TableHeaderColumn,TableRow,TableRowColumn,} 
 import RaisedButton from 'material-ui/RaisedButton';
 import axios from 'axios';
 import $ from 'jquery';
-import csv from 'csvtojson'
 const fs = require('fs');
 const storage = '../datasets';
 const {ipcRenderer, shell} = require('electron');
