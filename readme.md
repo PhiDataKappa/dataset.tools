@@ -16,7 +16,7 @@ npm install -g nodemon
 4. Push to the branch: `git push origin my-new-feature`
 5. Submit a pull request
 
-[Our original design templates](https://github.com/user/repo/blob/branch/other_file.md), for your reference.
+[Our original design templates](https://xd.adobe.com/view/2b9e85ab-17e3-4670-adf7-9e81edb55269/), for your reference.
 
 ## Credits
 Ben Collins
