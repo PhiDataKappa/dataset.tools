@@ -7,12 +7,15 @@ const BrowserWindow = electron.BrowserWindow
 const Menu = electron.Menu
 const Tray = electron.Tray
 const ipcMain = electron.ipcMain
+const nativeImage = require('electron').nativeImage
+
 // import MenuBuilder from './menu';
 // const assetsDir = path.join(__dirname, 'assets')
 
-let tray = undefined
-let window = undefined
-let mainWindow = null;
+let tray = null;
+let window = null;
+let trayIcon = nativeImage.createFromPath('Resources/datasetTools_tray_icon_menuIsVisible.png')
+
 
 // declare variables to id process environment
 const isDevelopment = (process.env.NODE_ENV === 'development');
@@ -46,57 +49,83 @@ const installExtensions = async () => {
   }
 };
 
-
-app.on('ready', () => {
-
-  tray = new Tray('Resources/dataset.tools_tray_icon_menuIsVisible.png')
-
-  // menubar icon click handler
-  tray.on('click', function(event) {
-    toggleWindow()
-  })
-
-  tray.setToolTip('dataset.tools')
-
+function createWindow () {
   window = new BrowserWindow({
     show: false,
     width: 800,
-    height: 800,
     minWidth: 540,
     minHeight: 400,
+    height: 800,
     resizable: true,
     center: true,
+    icon: path.join(__dirname + 'Resources/assets/icons/png/64x64.png'),
     frame: true,
-    icon: path.join(__dirname, 'Resources/dataset.tools_tray_icon_menuIsVisible.png')
-  })
-  window.loadURL(`file://${path.join(__dirname, 'app.html')}`)
+    titleBarStyle: 'hiddenInset'
+    });
 
-  // show after initial load
   window.webContents.once('did-finish-load', () => {
     window.show();
   });
 
   window.once('ready-to-show', () => {
     window.show();
+    window.focus();
   })
 
-  window.on('blur', () => {
-    if(!window.webContents.isDevToolsOpened()) {
-      window.hide();
-    }
-  })
+  window.loadURL(url.format({
+    pathname: path.join(__dirname, 'app.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
 
-  window.on('closed', function() {
+  window.on('closed', () => {
     window = null;
   })
-})
+
+  if (!tray) {
+    tray = new Tray(trayIcon);
+  }
+
+  // menubar icon click handler
+  tray.on('click', function(event) {
+    toggleWindowFromTray()
+  })
+
+  tray.setToolTip('dataset.tools')
+
+  const menu = Menu.buildFromTemplate(fileMenu)
+
+  Menu.setApplicationMenu(menu)
+
+}
+
+
+
 
 //TODO: make the tray icon change off/on when toggled
-const toggleWindow = () => {
-  if (window.isVisible()) {
-    window.hide()
+const toggleWindowFromTray = () => {
+  if (window) {
+    if (window.isVisible()) {
+      window.hide()
+    } else {
+      showWindow();
+      window.isMovable(false);
+    }
   } else {
-    showWindow()
+    createWindow();
+  }
+}
+
+const toggleWindowFromDock = () => {
+  if (window) {
+    if (window.isVisible()) {
+      window.hide()
+    } else {
+      showWindow()
+      window.center();
+    }
+  } else {
+    createWindow()
   }
 }
 
@@ -119,6 +148,10 @@ const showWindow = () => {
 ipcMain.on('show-window', () => {
   showWindow()
 })
+
+app.on('ready', createWindow);
+
+app.on('activate', toggleWindowFromDock);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -348,10 +381,6 @@ if (process.platform === 'win32') {
   addUpdateMenuItems(helpMenu, 0)
 }
 
-app.on('ready', function () {
-  const menu = Menu.buildFromTemplate(fileMenu)
-  Menu.setApplicationMenu(menu)
-})
 
 app.on('browser-window-created', function () {
   let reopenMenuItem = findReopenMenuItem()
@@ -362,76 +391,3 @@ app.on('window-all-closed', function () {
   let reopenMenuItem = findReopenMenuItem()
   if (reopenMenuItem) reopenMenuItem.enabled = true
 })
-
-
-app.on('ready', async () => {
-  if (isDevelopment || process.env.DEBUG_PROD === 'true') {
-    await installExtensions();
-  }
-
-  mainWindow = new BrowserWindow({
-    show: false,
-    width: 800,
-    height: 800,
-    minWidth: 540,
-    minHeight: 400,
-    resizable: true,
-    center: true,
-    frame: true,
-    skipTaskbar: false
-    });
-  // mainWindow.loadURL(`file://${__dirname}/app.html`);
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'app.html'),
-    protocol: 'file:',
-    slashes: true
-  }));
-  // show window once on first load
-  mainWindow.webContents.once('ready-to-show', () => {
-    mainWindow.show();
-  });
-  mainWindow.webContents.on('did-finish-load', () => {
-    if (!mainWindow) {
-      throw new Error('"mainWindow" is not defined');
-    }
-    mainWindow.show();
-    mainWindow.focus();
-  });
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
-});
-
-app.on('activate', () => {
-  if (window === null) {
-    createWindow();
-  }
-})
-
-function createWindow () {
-  let mainWindow = new BrowserWindow({
-    show: false,
-    width: 800,
-    minWidth: 540,
-    minHeight: 400,
-    height: 800,
-    resizable: true,
-    center: true,
-    icon: path.join(__dirname + 'Resources/dataset.tools_tray_icon_menuIsVisible.png'),
-    frame: true
-    });
-
-  mainWindow.once('ready-to-show', () => {
-    mainWindow.show()
-  })
-
-  mainWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'app.html'),
-    protocol: 'file:',
-    slashes: true
-  }))
-
-  mainWindow.on('closed', () => {
-    mainWindow = null
-  })
-}
