@@ -7,11 +7,15 @@ const BrowserWindow = electron.BrowserWindow
 const Menu = electron.Menu
 const Tray = electron.Tray
 const ipcMain = electron.ipcMain
+const nativeImage = require('electron').nativeImage
+
 // import MenuBuilder from './menu';
 // const assetsDir = path.join(__dirname, 'assets')
 
-let tray = undefined
-let window = undefined
+let tray = null;
+let window = null;
+let trayIcon = nativeImage.createFromPath('Resources/datasetTools_tray_icon_menuIsVisible.png')
+
 
 // declare variables to id process environment
 const isDevelopment = (process.env.NODE_ENV === 'development');
@@ -55,7 +59,8 @@ function createWindow () {
     resizable: true,
     center: true,
     icon: path.join(__dirname + 'Resources/assets/icons/png/64x64.png'),
-    frame: true
+    frame: true,
+    titleBarStyle: 'hiddenInset'
     });
 
   window.webContents.once('did-finish-load', () => {
@@ -63,7 +68,8 @@ function createWindow () {
   });
 
   window.once('ready-to-show', () => {
-    window.show()
+    window.show();
+    window.focus();
   })
 
   window.loadURL(url.format({
@@ -73,14 +79,16 @@ function createWindow () {
   }))
 
   window.on('closed', () => {
-    window = null
+    window = null;
   })
 
-  tray = new Tray('Resources/dataset.tools_tray_icon_menuIsVisible.png')
+  if (!tray) {
+    tray = new Tray(trayIcon);
+  }
 
   // menubar icon click handler
   tray.on('click', function(event) {
-    toggleWindow()
+    toggleWindowFromTray()
   })
 
   tray.setToolTip('dataset.tools')
@@ -88,18 +96,36 @@ function createWindow () {
   const menu = Menu.buildFromTemplate(fileMenu)
 
   Menu.setApplicationMenu(menu)
+
 }
 
 
-app.on('ready', createWindow);
 
 
 //TODO: make the tray icon change off/on when toggled
-const toggleWindow = () => {
-  if (window.isVisible()) {
-    window.hide()
+const toggleWindowFromTray = () => {
+  if (window) {
+    if (window.isVisible()) {
+      window.hide()
+    } else {
+      showWindow();
+      window.isMovable(false);
+    }
   } else {
-    showWindow()
+    createWindow();
+  }
+}
+
+const toggleWindowFromDock = () => {
+  if (window) {
+    if (window.isVisible()) {
+      window.hide()
+    } else {
+      showWindow()
+      window.center();
+    }
+  } else {
+    createWindow()
   }
 }
 
@@ -122,6 +148,10 @@ const showWindow = () => {
 ipcMain.on('show-window', () => {
   showWindow()
 })
+
+app.on('ready', createWindow);
+
+app.on('activate', toggleWindowFromDock);
 
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
@@ -361,9 +391,3 @@ app.on('window-all-closed', function () {
   let reopenMenuItem = findReopenMenuItem()
   if (reopenMenuItem) reopenMenuItem.enabled = true
 })
-
-app.on('activate', function () {
-  if (!window) {
-    createWindow();
-  }
-});

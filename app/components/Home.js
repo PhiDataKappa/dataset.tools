@@ -49,7 +49,7 @@ export default class Home extends Component {
     return (
       <div>
         <div className={styles.container} data-tid="container">
-          <h2 style={{color: '#f7f7f7'}}>dataset.tools</h2>
+          <h2 style={{color: '#f7f7f7', paddingTop: '10px'}}>dataset.tools</h2>
           <br/>
           <div style={{display:"flex", alignItems:"center", flexDirection:"column"}}>
           <img style={{width:"40%", height:"40%"}} id="dwimg" src="../Resources/dw.logo_greyscale.svg"/>
